@@ -5,6 +5,7 @@ using System.IO;
 using Mono;
 using WoffDotNet.Exceptions;
 using WoffDotNet.Types;
+using WoffDotNet.Validators;
 
 namespace WoffDotNet
 {
@@ -62,6 +63,10 @@ namespace WoffDotNet
             var privLength = enc.GetUInt32(bytes, 40);
 
             _header = new WoffHeader(signature, flavor, length, numTables, reserved, totalSfntSize, majorVersion, minorVersion, metaOffset, metaLength, metaOrigLength, privOffset, privLength);
+
+            var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
+            var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);
+            HeaderState = new HeaderState(!hasIllegalMetadata, !hasIllegalPrivateData);
         }
 
         public WoffHeader Header
@@ -71,5 +76,7 @@ namespace WoffDotNet
                 return _header;
             }
         }
+
+        public HeaderState HeaderState { get; private set; }
     }
 }

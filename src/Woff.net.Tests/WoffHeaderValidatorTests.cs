@@ -40,12 +40,31 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void HasIllegalMetadata_Should_BeTrue_BecauseTheMetadataWasNotCompressed()
+        {
+            // arrange
+            uint offset = 0;
+            uint length = 200;
+            uint origLength = 100;
+
+            var header = new WoffHeader(0, 0, 0, 0, 0, 0, 0, 0, offset, length, origLength, 0, 0);
+
+            // act
+            var actualResult = WoffHeaderValidator.HasIllegalMetadata(header);
+
+            // assert
+            actualResult.Should().BeTrue();
+        }
+
+
+
+        [Fact]
         public void HasIllegalMetadata_Should_BeFalse_BecauseItHasAnOffsetAndALength()
         {
             // arrange
             uint offset = 200;
             uint length = 200;
-            var header = new WoffHeader(0, 0, 0, 0, 0, 0, 0, 0, offset, length, 0, 0, 0);
+            var header = new WoffHeader(0, 0, 0, 0, 0, 0, 0, 0, offset, length, length, 0, 0);
 
             // act
             var actualResult = WoffHeaderValidator.HasIllegalMetadata(header);

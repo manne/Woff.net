@@ -4,6 +4,11 @@ namespace WoffDotNet.Validators
 {
     public static class WoffHeaderValidator
     {
+        private static bool InvalidLengths(uint length, uint origLength)
+        {
+            return origLength < length;
+        }
+
         /// <summary>
         /// Checks if extended metadata statements in the <paramref name="header"/> are illegal or not.
         /// </summary>
@@ -11,7 +16,17 @@ namespace WoffDotNet.Validators
         /// <returns><c>true</c> if the extended metadata statements are illegal, otherwise <c>false</c>.</returns>
         public static bool HasIllegalMetadata(WoffHeader header)
         {
-            return (header.MetaOffset == 0 && header.MetaLength != 0) || (header.MetaLength == 0 && header.MetaOffset != 0);
+            if (header.MetaOffset == 0 && header.MetaLength != 0)
+            {
+                return true;
+            }
+
+            if (header.MetaLength == 0 && header.MetaOffset != 0)
+            {
+                return true;
+            }
+
+            return InvalidLengths(header.MetaLength, header.MetaOrigLength);
         }
 
         /// <summary>

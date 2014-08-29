@@ -55,6 +55,20 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Read_Should_ThrowException_BecauseThSfntSizeValueIsNotDividableByFour()
+        {
+            // arrange
+            var binaryReader = new BinaryReader(new MemoryStream(Resources.InvalidHeader_WrongSfntSizeValue));
+            var cut = new WoffReader(binaryReader);
+
+            // act
+            Action act = cut.Process;
+
+            // assert
+            act.ShouldThrow<InvalidWoffTotalSfntSizeException>();
+        }
+
+        [Fact]
         public void Read_Should_ReadHeader()
         {
             // arrange

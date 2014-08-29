@@ -83,6 +83,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] InvalidHeader_WrongSfntSizeValue {
+            get {
+                object obj = ResourceManager.GetObject("InvalidHeader_WrongSfntSizeValue", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ValidHeaderOnly {
             get {
                 object obj = ResourceManager.GetObject("ValidHeaderOnly", resourceCulture);

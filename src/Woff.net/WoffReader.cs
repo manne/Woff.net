@@ -1,8 +1,8 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.IO;
-
 using Mono;
-
 using WoffDotNet.Exceptions;
 using WoffDotNet.Types;
 
@@ -48,6 +48,11 @@ namespace WoffDotNet
             }
 
             var totalSfntSize = enc.GetUInt32(bytes, 16);
+            if (totalSfntSize % 4 != 0)
+            {
+                throw new InvalidWoffTotalSfntSizeException(string.Format(CultureInfo.InvariantCulture, "The total sfnt size ({0}) is not a multiple of four.", totalSfntSize));
+            }
+
             var majorVersion = enc.GetUInt16(bytes, 20);
             var minorVersion = enc.GetUInt16(bytes, 22);
             var metaOffset = enc.GetUInt32(bytes, 24);

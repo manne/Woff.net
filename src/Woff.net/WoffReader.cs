@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using Mono;
@@ -24,6 +23,13 @@ namespace WoffDotNet
 
 
         public void Process()
+        {
+            Contract.Ensures(HeaderState != null);
+
+            ProcessHeader();
+        }
+
+        private void ProcessHeader()
         {
             var bytes = new byte[WoffHeader.Size];
             if (_binaryReader.Read(bytes, 0, bytes.Length) != WoffHeader.Size)
@@ -51,7 +57,11 @@ namespace WoffDotNet
             var totalSfntSize = enc.GetUInt32(bytes, 16);
             if (totalSfntSize % 4 != 0)
             {
-                throw new InvalidWoffTotalSfntSizeException(string.Format(CultureInfo.InvariantCulture, "The total sfnt size ({0}) is not a multiple of four.", totalSfntSize));
+                throw new InvalidWoffTotalSfntSizeException(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "The total sfnt size ({0}) is not a multiple of four.",
+                        totalSfntSize));
             }
 
             var majorVersion = enc.GetUInt16(bytes, 20);
@@ -62,7 +72,20 @@ namespace WoffDotNet
             var privOffset = enc.GetUInt32(bytes, 36);
             var privLength = enc.GetUInt32(bytes, 40);
 
-            _header = new WoffHeader(signature, flavor, length, numTables, reserved, totalSfntSize, majorVersion, minorVersion, metaOffset, metaLength, metaOrigLength, privOffset, privLength);
+            _header = new WoffHeader(
+                signature,
+                flavor,
+                length,
+                numTables,
+                reserved,
+                totalSfntSize,
+                majorVersion,
+                minorVersion,
+                metaOffset,
+                metaLength,
+                metaOrigLength,
+                privOffset,
+                privLength);
 
             var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);

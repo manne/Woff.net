@@ -68,6 +68,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\InvalidHeader_WrongMagicNumber.dat" />
+    <None Include="Resources\InvalidHeader_WrongReservedValue.dat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Woff.net\Woff.net.csproj">
@@ -80,7 +81,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ValidHeaderOnly.dat" />
+    <None Include="Resources\ValidHeaderOnly.dat" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

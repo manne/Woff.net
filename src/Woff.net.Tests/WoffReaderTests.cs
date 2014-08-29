@@ -41,6 +41,20 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Read_Should_ThrowException_BecauseTheReservedValueIsNotZero()
+        {
+            // arrange
+            var binaryReader = new BinaryReader(new MemoryStream(Resources.InvalidHeader_WrongReservedValue));
+            var cut = new WoffReader(binaryReader);
+
+            // act
+            Action act = cut.Process;
+
+            // assert
+            act.ShouldThrow<InvalidWoffReservedValueException>();
+        }
+
+        [Fact]
         public void Read_Should_ReadHeader()
         {
             // arrange

@@ -44,7 +44,7 @@ namespace WoffDotNet
             var reserved = enc.GetUInt16(bytes, 14);
             if (reserved != 0)
             {
-                throw new InvalidDataException("The reserved field must be zero");
+                throw new InvalidWoffReservedValueException("The reserved field must be zero");
             }
 
             var totalSfntSize = enc.GetUInt32(bytes, 16);

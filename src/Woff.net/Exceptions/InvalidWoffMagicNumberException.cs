@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace WoffDotNet.Exceptions
 {
-    public class InvalidWoffMagicNumberException : Exception
+    public class InvalidWoffMagicNumberException : GeneralWoffException
     {
         public InvalidWoffMagicNumberException()
         {

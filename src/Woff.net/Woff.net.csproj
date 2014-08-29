@@ -54,6 +54,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Types\WoffHeader.cs" />
+    <Compile Include="Validators\WoffHeaderValidator.cs" />
     <Compile Include="WoffReader.cs" />
   </ItemGroup>
   <ItemGroup>

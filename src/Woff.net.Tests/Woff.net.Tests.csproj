@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\InvalidHeader_WrongMagicNumber.dat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Woff.net\Woff.net.csproj">

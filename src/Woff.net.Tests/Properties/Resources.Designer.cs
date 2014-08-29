@@ -63,6 +63,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] InvalidHeader_WrongMagicNumber {
+            get {
+                object obj = ResourceManager.GetObject("InvalidHeader_WrongMagicNumber", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ValidHeaderOnly {
             get {
                 object obj = ResourceManager.GetObject("ValidHeaderOnly", resourceCulture);

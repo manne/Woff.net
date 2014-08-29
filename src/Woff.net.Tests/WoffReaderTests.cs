@@ -3,6 +3,7 @@ using System.IO;
 
 using FluentAssertions;
 
+using WoffDotNet.Exceptions;
 using WoffDotNet.Tests.Properties;
 
 using Xunit;
@@ -24,6 +25,21 @@ namespace WoffDotNet.Tests
             // assert
             act.ShouldThrow<EndOfStreamException>();
         }
+
+        [Fact]
+        public void Read_Should_ThrowException_BecauseTheMagicNumerIsIncorrect()
+        {
+            // arrange
+            var binaryReader = new BinaryReader(new MemoryStream(Resources.InvalidHeader_WrongMagicNumber));
+            var cut = new WoffReader(binaryReader);
+
+            // act
+            Action act = cut.Process;
+
+            // assert
+            act.ShouldThrow<InvalidWoffMagicNumberException>();
+        }
+
         [Fact]
         public void Read_Should_ReadHeader()
         {

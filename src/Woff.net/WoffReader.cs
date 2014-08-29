@@ -3,6 +3,7 @@ using System.IO;
 
 using Mono;
 
+using WoffDotNet.Exceptions;
 using WoffDotNet.Types;
 
 namespace WoffDotNet
@@ -34,7 +35,7 @@ namespace WoffDotNet
 
             if (!signature.Equals(WoffHeader.MagicNumberUInt))
             {
-                throw new InvalidDataException("There must be the Magic Number in the beginning of the stream");
+                throw new InvalidWoffMagicNumberException("There must be the Magic Number in the beginning of the stream");
             }
 
             var flavor = enc.GetUInt32(bytes, 4);

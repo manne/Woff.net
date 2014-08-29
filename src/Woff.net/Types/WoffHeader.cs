@@ -9,6 +9,13 @@ namespace WoffDotNet.Types
     /// </summary>
     public sealed class WoffHeader : IEquatable<WoffHeader>, ICloneable
     {
+        public const uint Size = 44;
+
+        /// <summary>
+        /// The magic number for WOFF files.
+        /// </summary>
+        public const UInt32 MagicNumberUInt = 0x774F4646;
+
         /// <summary>
         /// Creates a new instance of <see cref="WoffHeader"/>.
         /// </summary>

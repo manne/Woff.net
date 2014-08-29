@@ -4,14 +4,23 @@ using System.IO;
 using FluentAssertions;
 
 using WoffDotNet.Exceptions;
+using WoffDotNet.Readers;
 using WoffDotNet.Tests.Properties;
+using WoffDotNet.Types;
 
 using Xunit;
 
 namespace WoffDotNet.Tests
 {
-    public class WoffReaderTests
+    public class WoffHeaderReaderTests
     {
+        private byte[] GetHeader(byte[] bytes)
+        {
+            var result = new byte[WoffHeader.Size];
+            Array.Copy(bytes, result, result.Length);
+            return result;
+        }
+
         [Fact]
         public void Read_Should_ThrowException_BecauseStreamIsTooSmall()
         {
@@ -30,8 +39,7 @@ namespace WoffDotNet.Tests
         public void Read_Should_ThrowException_BecauseTheMagicNumerIsIncorrect()
         {
             // arrange
-            var binaryReader = new BinaryReader(new MemoryStream(Resources.InvalidHeader_WrongMagicNumber));
-            var cut = new WoffReader(binaryReader);
+            var cut = new WoffHeaderReader(GetHeader(Resources.InvalidHeader_WrongMagicNumber));
 
             // act
             Action act = cut.Process;
@@ -44,8 +52,7 @@ namespace WoffDotNet.Tests
         public void Read_Should_ThrowException_BecauseTheReservedValueIsNotZero()
         {
             // arrange
-            var binaryReader = new BinaryReader(new MemoryStream(Resources.InvalidHeader_WrongReservedValue));
-            var cut = new WoffReader(binaryReader);
+            var cut = new WoffHeaderReader(GetHeader(Resources.InvalidHeader_WrongReservedValue));
 
             // act
             Action act = cut.Process;
@@ -58,8 +65,7 @@ namespace WoffDotNet.Tests
         public void Read_Should_ThrowException_BecauseThSfntSizeValueIsNotDividableByFour()
         {
             // arrange
-            var binaryReader = new BinaryReader(new MemoryStream(Resources.InvalidHeader_WrongSfntSizeValue));
-            var cut = new WoffReader(binaryReader);
+            var cut = new WoffHeaderReader(GetHeader(Resources.InvalidHeader_WrongSfntSizeValue));
 
             // act
             Action act = cut.Process;
@@ -72,8 +78,7 @@ namespace WoffDotNet.Tests
         public void Read_Should_ReadHeader()
         {
             // arrange
-            var binaryReader = new BinaryReader(new MemoryStream(Resources.ValidHeaderOnly));
-            var cut = new WoffReader(binaryReader);
+            var cut = new WoffHeaderReader(GetHeader(Resources.ValidHeaderOnly));
 
             // act
             cut.Process();

@@ -1,8 +1,12 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
+
 using Mono;
 using WoffDotNet.Exceptions;
+using WoffDotNet.Readers;
 using WoffDotNet.Types;
 using WoffDotNet.Validators;
 
@@ -11,6 +15,7 @@ namespace WoffDotNet
     public class WoffReader
     {
         private readonly BinaryReader _binaryReader;
+        private Queue<WoffTableDirectory> tableDirectories;
 
         private WoffHeader _header;
 
@@ -27,65 +32,45 @@ namespace WoffDotNet
             Contract.Ensures(HeaderState != null);
 
             ProcessHeader();
+            ProcessTableDirectories();
+        }
+
+        private void ProcessTableDirectories()
+        {
+            var tableDirectoriesBlockSize = Header.NumTables * WoffTableDirectory.Size;
+            var bytes = new byte[tableDirectoriesBlockSize];
+            if (_binaryReader.Read(bytes, (int)WoffHeader.Size, (int)tableDirectoriesBlockSize) != tableDirectoriesBlockSize)
+            {
+                throw new EndOfStreamException("The stream does not have the table directories");
+            }
+
+            tableDirectories = new Queue<WoffTableDirectory>(Header.NumTables);
+
+            int offset = 0;
+            for (int i = 0; i < Header.NumTables; i++)
+            {
+                var directoryBytes = new byte[WoffTableDirectory.Size];
+                Array.Copy(bytes, offset, directoryBytes, 0, (int)WoffTableDirectory.Size);
+                var directoryReader = new WoffTableDirectoryReader(directoryBytes);
+                var woffTableDirectory = directoryReader.Process();
+                tableDirectories.Enqueue(woffTableDirectory);
+                offset += (int)WoffTableDirectory.Size;
+            }
         }
 
         private void ProcessHeader()
         {
+            Contract.Ensures(Header.NumTables > 0);
+
             var bytes = new byte[WoffHeader.Size];
             if (_binaryReader.Read(bytes, 0, bytes.Length) != WoffHeader.Size)
             {
                 throw new EndOfStreamException("The stream does not have a header");
             }
 
-            var enc = DataConverter.BigEndian;
-            var signature = enc.GetUInt32(bytes, 0);
-
-            if (!signature.Equals(WoffHeader.MagicNumberUInt))
-            {
-                throw new InvalidWoffMagicNumberException("There must be the Magic Number in the beginning of the stream");
-            }
-
-            var flavor = enc.GetUInt32(bytes, 4);
-            var length = enc.GetUInt32(bytes, 8);
-            var numTables = enc.GetUInt16(bytes, 12);
-            var reserved = enc.GetUInt16(bytes, 14);
-            if (reserved != 0)
-            {
-                throw new InvalidWoffReservedValueException("The reserved field must be zero");
-            }
-
-            var totalSfntSize = enc.GetUInt32(bytes, 16);
-            if (totalSfntSize % 4 != 0)
-            {
-                throw new InvalidWoffTotalSfntSizeException(
-                    string.Format(
-                        CultureInfo.InvariantCulture,
-                        "The total sfnt size ({0}) is not a multiple of four.",
-                        totalSfntSize));
-            }
-
-            var majorVersion = enc.GetUInt16(bytes, 20);
-            var minorVersion = enc.GetUInt16(bytes, 22);
-            var metaOffset = enc.GetUInt32(bytes, 24);
-            var metaLength = enc.GetUInt32(bytes, 28);
-            var metaOrigLength = enc.GetUInt32(bytes, 32);
-            var privOffset = enc.GetUInt32(bytes, 36);
-            var privLength = enc.GetUInt32(bytes, 40);
-
-            _header = new WoffHeader(
-                signature,
-                flavor,
-                length,
-                numTables,
-                reserved,
-                totalSfntSize,
-                majorVersion,
-                minorVersion,
-                metaOffset,
-                metaLength,
-                metaOrigLength,
-                privOffset,
-                privLength);
+            var headerReader = new WoffHeaderReader(bytes);
+            headerReader.Process();
+            _header = headerReader.Header;
 
             var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);

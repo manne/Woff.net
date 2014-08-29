@@ -64,7 +64,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="WoffHeaderValidatorTests.cs" />
-    <Compile Include="WoffReaderTests.cs" />
+    <Compile Include="WoffHeaderReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

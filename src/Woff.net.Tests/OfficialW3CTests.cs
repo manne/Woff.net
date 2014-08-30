@@ -110,16 +110,42 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Metadata_MetaOrigLength_001_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_metaOrigLength_001);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_MetaOrigLength_001_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_metaOrigLength_001);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public void Invalid_Metadata_Compression_001()
         {
             // arrange
             var cut = GetReader(Resources.metadata_compression_001);
 
             // act
-            Action action = cut.Process;
+            cut.Process();
 
             // assert
-            action.ShouldThrow<WoffUncompressException>();
+            cut.Metadata.Should().BeNull();
         }
     }
 }

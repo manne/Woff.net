@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 using Ionic.Zlib;
@@ -68,21 +69,24 @@ namespace WoffDotNet
 
             _binaryReader.BaseStream.Position = Header.MetaOffset;
             var bytes = new byte[Header.MetaLength];
+            var hasInvalidLengths = false;
             if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
             {
                 throw new EndOfStreamException("Could not read metadata");
             }
 
+            var exceptions = new List<Exception>();
             var metaBytes = bytes;
             if (Header.MetaLength <= Header.MetaOrigLength)
             {
                 try
                 {
                     metaBytes = ZlibStream.UncompressBuffer(bytes);
+                    hasInvalidLengths = !WoffMetadataValidator.ValidateLengths(Header.MetaOrigLength, (uint)metaBytes.Length);
                 }
                 catch (ZlibException e)
                 {
-                    throw new WoffUncompressException("Cannot uncompress metadata", e);
+                    exceptions.Add(new WoffUncompressException("Cannot uncompress metadata", e));
                 }
             }
 
@@ -93,10 +97,21 @@ namespace WoffDotNet
                 xmlDocument.Load(reader);
             }
 
+            
             var aggregateException = xmlDocument.ValidateWoffMetadata();
             if (aggregateException != null)
             {
-                MetadataExceptions = aggregateException.InnerExceptions;
+                exceptions.AddRange(aggregateException.InnerExceptions);
+            }
+
+            if (hasInvalidLengths)
+            {
+                exceptions.Add(new InvalidRangeException("The stated metadata length is not equal to the actual value"));
+            }
+
+            if (exceptions.Any())
+            {
+                MetadataExceptions = exceptions;
             }
             else
             {

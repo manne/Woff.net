@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="DataConverter.cs" />
     <Compile Include="Exceptions\GeneralWoffException.cs" />
+    <Compile Include="Exceptions\InvalidRangeException.cs" />
     <Compile Include="Exceptions\InvalidWoffMagicNumberException.cs" />
     <Compile Include="Exceptions\InvalidWoffReservedValueException.cs" />
     <Compile Include="Exceptions\InvalidWoffTotalSfntSizeException.cs" />

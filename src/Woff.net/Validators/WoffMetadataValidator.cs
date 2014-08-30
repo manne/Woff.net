@@ -9,5 +9,10 @@ namespace WoffDotNet.Validators
         {
             return null;
         }
+
+        public static bool ValidateLengths(uint statedLength, uint actualLength)
+        {
+            return statedLength == actualLength;
+        }
     }
 }

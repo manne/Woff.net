@@ -263,5 +263,31 @@ namespace WoffDotNet.Tests
             // assert
             cut.ShouldHaveCorrectlyAssignedMetadata();
         }
+
+        [Fact]
+        public void Invalid_Metadata_Encoding_006_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_006);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Encoding_006_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_006);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().ContainItemsAssignableTo<EncodingNotSupportedException>();
+        }
     }
 }

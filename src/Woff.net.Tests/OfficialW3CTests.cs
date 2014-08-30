@@ -173,5 +173,18 @@ namespace WoffDotNet.Tests
             // assert
             cut.Metadata.Should().BeNull();
         }
+
+        [Fact]
+        public void Valid_Metadata_Encoding_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_001);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().NotBeNull();
+        }
     }
 }

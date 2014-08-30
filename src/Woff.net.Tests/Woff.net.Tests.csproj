@@ -74,6 +74,7 @@
     <None Include="Resources\InvalidHeader_WrongReservedValue.dat" />
     <None Include="Resources\InvalidHeader_WrongSfntSizeValue.dat" />
     <None Include="Resources\metadata-compression-001.woff" />
+    <None Include="Resources\metadata-encoding-001.woff" />
     <None Include="Resources\metadata-metaOrigLength-001.woff" />
     <None Include="Resources\metadata-metaOrigLength-002.woff" />
     <None Include="Resources\valid-001.woff" />

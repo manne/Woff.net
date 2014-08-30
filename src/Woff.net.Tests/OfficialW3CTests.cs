@@ -53,7 +53,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.Metadata.Should().NotBeNull();
+            cut.ShouldHaveCorrectlyAssignedMetadata();
         }
 
         [Fact]
@@ -248,7 +248,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.Metadata.Should().NotBeNull();
+            cut.ShouldHaveCorrectlyAssignedMetadata();
         }
     }
 }

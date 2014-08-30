@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 using System.IO;
+using System.Xml;
 
+using Ionic.Zlib;
+
+using WoffDotNet.Exceptions;
 using WoffDotNet.Readers;
 using WoffDotNet.Types;
 using WoffDotNet.Validators;
@@ -34,6 +38,42 @@ namespace WoffDotNet
             ProcessHeader();
             ProcessTableDirectories();
             ProcessFontTables();
+            ProcessMetadata();
+        }
+
+        private void ProcessMetadata()
+        {
+            if (!Header.HasMetadata())
+            {
+                return;
+            }
+
+            _binaryReader.BaseStream.Position = Header.MetaOffset;
+            var bytes = new byte[Header.MetaLength];
+            if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
+            {
+                throw new EndOfStreamException("Could not read metadata");
+            }
+
+            var metaBytes = bytes;
+            if (Header.MetaLength != Header.MetaOrigLength)
+            {
+                try
+                {
+                    metaBytes = ZlibStream.UncompressBuffer(bytes);
+                }
+                catch (ZlibException e)
+                {
+                    throw new WoffUncompressException("Cannot uncompress metadata", e);
+                }
+            }
+
+            var xmlDocument = new XmlDocument();
+            var memoryStream = new MemoryStream(metaBytes);
+            using (var reader = XmlReader.Create(memoryStream))
+            {
+                xmlDocument.Load(reader);
+            }
         }
 
         private void ProcessFontTables()

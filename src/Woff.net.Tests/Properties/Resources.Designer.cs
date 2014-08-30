@@ -103,6 +103,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] valid_002 {
+            get {
+                object obj = ResourceManager.GetObject("valid_002", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ValidHeaderOnly {
             get {
                 object obj = ResourceManager.GetObject("ValidHeaderOnly", resourceCulture);

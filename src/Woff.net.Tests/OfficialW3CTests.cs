@@ -27,5 +27,18 @@ namespace WoffDotNet.Tests
             // assert
             action();
         }
+
+        [Fact]
+        public void Valid_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.valid_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action();
+        }
     }
 }

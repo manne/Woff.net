@@ -328,5 +328,31 @@ namespace WoffDotNet.Tests
             // assert
             cut.MetadataExceptions.Should().NotBeNullOrEmpty();
         }
+
+        [Fact]
+        public void Invalid_Metadata_Schema_Metadata_003_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_metadata_003);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Schema_Metadata_003_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_metadata_003);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().NotBeNullOrEmpty();
+        }
     }
 }

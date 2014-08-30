@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace WoffDotNet.Exceptions
 {
+    [Serializable]
     public class GeneralWoffException : Exception
     {
         public GeneralWoffException()

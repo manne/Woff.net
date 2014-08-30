@@ -97,7 +97,6 @@ namespace WoffDotNet
                 xmlDocument.Load(reader);
             }
 
-            
             var aggregateException = xmlDocument.ValidateWoffMetadata();
             if (aggregateException != null)
             {

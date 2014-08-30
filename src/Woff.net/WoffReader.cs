@@ -93,7 +93,15 @@ namespace WoffDotNet
                 xmlDocument.Load(reader);
             }
 
-            Metadata = xmlDocument;
+            var aggregateException = xmlDocument.ValidateWoffMetadata();
+            if (aggregateException != null)
+            {
+                MetadataExceptions = aggregateException.InnerExceptions;
+            }
+            else
+            {
+                Metadata = xmlDocument;
+            }
         }
 
         private void ProcessFontTables()
@@ -172,6 +180,8 @@ namespace WoffDotNet
         public HeaderState HeaderState { get; private set; }
 
         public XmlDocument Metadata { get; private set; }
+
+        public IEnumerable<Exception> MetadataExceptions { get; private set; }
 
         public byte[] PrivateData { get; private set; }
     }

@@ -133,6 +133,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] metadata_encoding_003 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_encoding_003", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] metadata_metaOrigLength_001 {
             get {
                 object obj = ResourceManager.GetObject("metadata_metaOrigLength_001", resourceCulture);

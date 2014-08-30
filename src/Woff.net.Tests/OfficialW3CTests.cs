@@ -133,7 +133,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.MetadataExceptions.Should().NotBeNullOrEmpty();
+            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(InvalidRangeException)));
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.MetadataExceptions.Should().NotBeNullOrEmpty();
+            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(InvalidRangeException)));
         }
 
         [Fact]
@@ -206,6 +206,32 @@ namespace WoffDotNet.Tests
         {
             // arrange
             var cut = GetReader(Resources.metadata_encoding_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(EncodingNotSupportedException)));
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Encoding_003_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_003);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Encoding_003_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_003);
 
             // act
             cut.Process();

@@ -19,16 +19,29 @@ namespace WoffDotNet.Tests
 
 
         [Fact]
-        public void Valid_001()
+        public void Valid_001_NoMetadata()
         {
             // arrange
             var cut = GetReader(Resources.valid_001);
 
             // act
-            Action action = cut.Process;
+            cut.Process();
 
             // assert
-            action();
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Valid_001_NoPrivateData()
+        {
+            // arrange
+            var cut = GetReader(Resources.valid_001);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.PrivateData.Should().BeNull();
         }
 
         [Fact]

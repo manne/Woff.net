@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 using FluentAssertions;
 
@@ -185,6 +186,32 @@ namespace WoffDotNet.Tests
 
             // assert
             cut.Metadata.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Encoding_002_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Encoding_002_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(EncodingNotSupportedException)));
         }
     }
 }

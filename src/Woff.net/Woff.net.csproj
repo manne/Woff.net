@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataConverter.cs" />
+    <Compile Include="Exceptions\EncodingNotSupportedException.cs" />
     <Compile Include="Exceptions\GeneralWoffException.cs" />
     <Compile Include="Exceptions\InvalidRangeException.cs" />
     <Compile Include="Exceptions\InvalidWoffMagicNumberException.cs" />

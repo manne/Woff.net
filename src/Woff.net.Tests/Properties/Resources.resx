@@ -145,6 +145,9 @@
   <data name="metadata_encoding_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\metadata-encoding-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="metadata_encoding_002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\metadata-encoding-002.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="metadata_metaOrigLength_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\metadata-metaOrigLength-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

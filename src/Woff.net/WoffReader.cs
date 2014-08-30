@@ -95,10 +95,20 @@ namespace WoffDotNet
 
             var xmlDocument = new XmlDocument();
             var memoryStream = new MemoryStream(metaBytes);
-            using (var reader = XmlReader.Create(memoryStream))
+            using (var tr = new XmlTextReader(memoryStream))
             {
-                xmlDocument.Load(reader);
+                tr.MoveToContent();
+                if (!string.Equals(tr.Encoding.WebName, "utf-8", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    exceptions.Add(new EncodingNotSupportedException("metadata must be encoded with UTF-8"));
+                }
+                else
+                {
+                    xmlDocument.Load(tr);
+                }
+                
             }
+            
 
             var aggregateException = xmlDocument.ValidateWoffMetadata();
             if (aggregateException != null)

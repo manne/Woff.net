@@ -123,6 +123,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] metadata_metaOrigLength_002 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_metaOrigLength_002", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] valid_001 {
             get {
                 object obj = ResourceManager.GetObject("valid_001", resourceCulture);

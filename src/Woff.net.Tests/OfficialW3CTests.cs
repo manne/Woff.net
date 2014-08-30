@@ -136,6 +136,32 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Metadata_MetaOrigLength_002_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_metaOrigLength_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_MetaOrigLength_002_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_metaOrigLength_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public void Invalid_Metadata_Compression_001()
         {
             // arrange

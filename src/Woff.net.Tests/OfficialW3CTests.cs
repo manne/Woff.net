@@ -239,5 +239,18 @@ namespace WoffDotNet.Tests
             // assert
             cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(EncodingNotSupportedException)));
         }
+
+        [Fact]
+        public void Valid_Metadata_Encoding_004()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_004);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().NotBeNull();
+        }
     }
 }

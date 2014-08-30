@@ -71,6 +71,32 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Valid_004_WithMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.valid_004);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void Valid_004_WithPrivateData()
+        {
+            // arrange
+            var cut = GetReader(Resources.valid_004);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.PrivateData.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public void Invalid_Header_Signature_001()
         {
             // arrange

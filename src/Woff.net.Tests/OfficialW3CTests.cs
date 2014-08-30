@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 
 using FluentAssertions;
 
@@ -17,7 +16,6 @@ namespace WoffDotNet.Tests
         {
             return new WoffReader(new BinaryReader(new MemoryStream(bytes)));
         }
-
 
         [Fact]
         public void Valid_001_NoMetadata()
@@ -133,7 +131,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(InvalidRangeException)));
+           cut.MetadataExceptions.Should().ContainItemsAssignableTo<InvalidRangeException>();
         }
 
         [Fact]
@@ -159,7 +157,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(InvalidRangeException)));
+            cut.MetadataExceptions.Should().ContainItemsAssignableTo<InvalidRangeException>();
         }
 
         [Fact]
@@ -211,7 +209,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(EncodingNotSupportedException)));
+            cut.MetadataExceptions.Should().ContainItemsAssignableTo<EncodingNotSupportedException>();
         }
 
         [Fact]
@@ -237,7 +235,7 @@ namespace WoffDotNet.Tests
             cut.Process();
 
             // assert
-            cut.MetadataExceptions.Should().Contain(e => e.GetType().IsAssignableFrom(typeof(EncodingNotSupportedException)));
+            cut.MetadataExceptions.Should().ContainItemsAssignableTo<EncodingNotSupportedException>();
         }
 
         [Fact]

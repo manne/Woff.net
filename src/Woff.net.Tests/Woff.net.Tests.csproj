@@ -87,6 +87,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Resources\valid-002.woff" />
+    <None Include="Resources\valid-003.woff" />
     <None Include="Resources\ValidHeaderOnly.dat" />
   </ItemGroup>
   <Choose>

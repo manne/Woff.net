@@ -45,6 +45,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Valid_003()
+        {
+            // arrange
+            var cut = GetReader(Resources.valid_003);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.PrivateData.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public void Invalid_Header_Signature_001()
         {
             // arrange

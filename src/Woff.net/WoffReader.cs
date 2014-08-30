@@ -39,6 +39,24 @@ namespace WoffDotNet
             ProcessTableDirectories();
             ProcessFontTables();
             ProcessMetadata();
+            ProcessPrivateData();
+        }
+
+        private void ProcessPrivateData()
+        {
+            if (!Header.HasPrivateDate())
+            {
+                return;
+            }
+
+            _binaryReader.BaseStream.Position = Header.PrivOffset;
+            var bytes = new byte[Header.PrivLength];
+            if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
+            {
+                throw new EndOfStreamException("Could not read private data");
+            }
+
+            PrivateData = bytes;
         }
 
         private void ProcessMetadata()
@@ -154,5 +172,7 @@ namespace WoffDotNet
         public HeaderState HeaderState { get; private set; }
 
         public XmlDocument Metadata { get; private set; }
+
+        public byte[] PrivateData { get; private set; }
     }
 }

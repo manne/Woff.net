@@ -38,10 +38,10 @@ namespace WoffDotNet.Tests
             var cut = GetReader(Resources.valid_002);
 
             // act
-            Action action = cut.Process;
+            cut.Process();
 
             // assert
-            action();
+            cut.Metadata.Should().NotBeNull();
         }
 
         [Fact]

@@ -27,6 +27,9 @@ namespace WoffDotNet
         public WoffReader(BinaryReader binaryReader)
         {
             Contract.Requires(binaryReader != null);
+            Contract.Requires(binaryReader.BaseStream != null);
+            Contract.Requires(binaryReader.BaseStream.CanRead);
+            Contract.Requires(binaryReader.BaseStream.CanSeek);
 
             _binaryReader = binaryReader;
         }

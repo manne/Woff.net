@@ -74,6 +74,8 @@ namespace WoffDotNet
             {
                 xmlDocument.Load(reader);
             }
+
+            Metadata = xmlDocument;
         }
 
         private void ProcessFontTables()
@@ -150,5 +152,7 @@ namespace WoffDotNet
         }
 
         public HeaderState HeaderState { get; private set; }
+
+        public XmlDocument Metadata { get; private set; }
     }
 }

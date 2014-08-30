@@ -108,5 +108,18 @@ namespace WoffDotNet.Tests
             // assert
             action.ShouldThrow<InvalidWoffMagicNumberException>();
         }
+
+        [Fact]
+        public void Invalid_Metadata_Compression_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_compression_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<WoffUncompressException>();
+        }
     }
 }

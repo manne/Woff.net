@@ -74,7 +74,7 @@ namespace WoffDotNet
             }
 
             var metaBytes = bytes;
-            if (Header.MetaLength != Header.MetaOrigLength)
+            if (Header.MetaLength <= Header.MetaOrigLength)
             {
                 try
                 {

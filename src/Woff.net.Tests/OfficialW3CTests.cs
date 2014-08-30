@@ -304,7 +304,7 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
-        public void Invalid_Metadata_Schema_Metadata_002()
+        public void Invalid_Metadata_Schema_Metadata_002_NoMetadata()
         {
             // arrange
             var cut = GetReader(Resources.metadata_schema_metadata_002);
@@ -314,6 +314,19 @@ namespace WoffDotNet.Tests
 
             // assert
             cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Schema_Metadata_002_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_metadata_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().NotBeNullOrEmpty();
         }
     }
 }

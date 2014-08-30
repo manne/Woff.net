@@ -302,5 +302,18 @@ namespace WoffDotNet.Tests
             // assert
             cut.Metadata.Should().NotBeNull();
         }
+
+        [Fact]
+        public void Invalid_Metadata_Schema_Metadata_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_metadata_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
     }
 }

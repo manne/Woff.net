@@ -86,5 +86,15 @@ namespace WoffDotNet.Properties {
                 return ResourceManager.GetString("Invalid_format_for_dollar_specifier", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] woffmeta_rng {
+            get {
+                object obj = ResourceManager.GetObject("woffmeta_rng", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

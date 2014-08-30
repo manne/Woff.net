@@ -6,7 +6,7 @@ namespace WoffDotNet.Exceptions
     [Serializable]
     public class EncodingNotSupportedException : Exception
     {
-        public EncodingNotSupportedException()
+        public EncodingNotSupportedException() : this("the encoding is not supported")
         {
         }
 

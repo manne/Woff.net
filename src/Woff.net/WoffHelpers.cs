@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.IO;
+using System.Text;
+using System.Xml;
 
 using WoffDotNet.Types;
 using WoffDotNet.Validators;
@@ -39,6 +42,36 @@ namespace WoffDotNet
 
             UInt32 mod = position % 4;
             return (mod == 0) ? 0 : 4 - mod;
+        }
+
+        public static bool HasEncoding(this XmlDocument document, string encoding)
+        {
+
+            if (document.FirstChild.NodeType == XmlNodeType.XmlDeclaration)
+            {
+                var xmlDeclaration = (XmlDeclaration)document.FirstChild;
+                if (string.IsNullOrEmpty(xmlDeclaration.Encoding))
+                {
+                    return true;
+                }
+
+                if (string.Equals(xmlDeclaration.Encoding, "UTF-8", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static Encoding GetEncoding(this byte[] bytes)
+        {
+            using (var reader = new StreamReader(new MemoryStream(bytes), true))
+            {
+                reader.Read();
+                var currentEncoding = reader.CurrentEncoding;
+                return currentEncoding;
+            }
         }
     }
 }

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="">
+    <start>
+        <element name="metadata">
+            <attribute name="version">
+                <data type="decimal"/>
+            </attribute>
+            <interleave>
+                <optional>
+                    <element name="uniqueid">
+                        <attribute name="id"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="vendor">
+                        <attribute name="name"/>
+                        <ref name="structure.attrib"/>
+                        <optional>
+                            <attribute name="url"/>
+                        </optional>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="credits">
+                        <oneOrMore>
+                            <element name="credit">
+                                <attribute name="name"/>
+                                <optional>
+                                    <attribute name="role"/>
+                                </optional>
+                                <optional>
+                                    <attribute name="url">
+                                        <data type="anyURI"/>
+                                    </attribute>
+                                </optional>
+                                <ref name="dir.attrib"/>
+                                <optional>
+                                    <attribute name="class"/>
+                                </optional>
+                            </element>
+                        </oneOrMore>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="description">
+                        <oneOrMore>
+                            <ref name="text"/>
+                        </oneOrMore>
+                        <optional>
+                            <attribute name="url"/>
+                        </optional>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="license">
+                        <optional>
+                            <attribute name="id"/>
+                        </optional>
+                        <optional>
+                            <attribute name="url">
+                                <data type="anyURI"/>
+                            </attribute>
+                        </optional>
+                        <zeroOrMore>
+                            <ref name="text"/>
+                        </zeroOrMore>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="copyright">
+                        <oneOrMore>
+                            <ref name="text"/>
+                        </oneOrMore>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="trademark">
+                        <oneOrMore>
+                            <ref name="text"/>
+                        </oneOrMore>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="licensee">
+                        <attribute name="name"/>
+                        <ref name="dir.attrib"/>
+                        <optional>
+                            <attribute name="class"/>
+                        </optional>
+                    </element>
+                </optional>
+                <zeroOrMore>
+                    <element name="extension">
+                        <optional>
+                            <attribute name="id" />
+                        </optional>
+
+                        <zeroOrMore>
+                            <ref name="name"/>
+                        </zeroOrMore>
+                        <oneOrMore>
+                            <element name="item">
+                                <optional>
+                                    <attribute name="id"/>
+                                </optional>
+                                <oneOrMore>
+                                    <ref name="name"/>
+                                </oneOrMore>
+                                <oneOrMore>
+                                    <element name="value">
+                                        <ref name="lang.attrib"/>
+                                        <ref name="dir.attrib"/>
+                                        <optional>
+                                            <attribute name="class"/>
+                                        </optional>
+                                        <text/>
+                                    </element>
+                                </oneOrMore>
+                            </element>
+                        </oneOrMore>
+                    </element>
+                </zeroOrMore>
+            </interleave>
+        </element>
+    </start>
+    <!-- Elements -->
+    <define name="text">
+        <element name="text">
+            <ref name="lang.attrib"/>
+            <ref name="dir.attrib"/>
+            <optional>
+                <attribute name="class"/>
+            </optional>
+            <interleave>
+                <zeroOrMore>
+                    <ref name="div"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="span"/>
+                </zeroOrMore>
+                <optional>
+                    <text/>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="name">
+        <element name="name">
+            <ref name="lang.attrib"/>
+            <ref name="structure.attrib"/>
+            <text/>
+        </element>
+    </define>
+    <define name="div">
+        <element name="div">
+            <ref name="structure.attrib"/>
+            <interleave>
+                <optional>
+                    <ref name="div"/>
+                </optional>
+                <optional>
+                    <ref name="span"/>
+                </optional>
+                <optional>
+                    <text/>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="span">
+        <element name="span">
+            <ref name="dir.attrib"/>
+            <ref name="class.attrib"/>
+            <interleave>
+                <optional>
+                    <ref name="span"/>
+                </optional>
+                <optional>
+                    <text/>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+
+    <!-- Attributes -->
+    <define name="NMTOKENS.datatype">
+        <data type="NMTOKENS"/>
+    </define>
+    <define name="dir.attrib">
+        <optional>
+            <attribute name="dir">
+                <choice>
+                    <value>ltr</value>
+                    <value>rtl</value>
+                </choice>
+            </attribute>
+        </optional>
+    </define>
+    <define name="class.attrib">
+        <optional>
+            <attribute name="class">
+                <ref name="NMTOKENS.datatype"/>
+            </attribute>
+        </optional>
+    </define>
+    <define name="structure.attrib">
+        <ref name="dir.attrib"/>
+        <ref name="class.attrib"/>
+    </define>
+    <define name="lang.attrib">
+        <optional>
+            <attribute name="lang" ns="http://www.w3.org/XML/1998/namespace"/>
+        </optional>
+        <optional>
+            <attribute name="lang"/>
+        </optional>
+    </define>
+</grammar>

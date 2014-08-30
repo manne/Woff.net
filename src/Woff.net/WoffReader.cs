@@ -72,63 +72,16 @@ namespace WoffDotNet
 
             _binaryReader.BaseStream.Position = Header.MetaOffset;
             var bytes = new byte[Header.MetaLength];
-            var hasInvalidLengths = false;
+            
             if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
             {
                 throw new EndOfStreamException("Could not read metadata");
             }
 
-            var exceptions = new List<Exception>();
-            var metaBytes = bytes;
-            if (Header.MetaLength <= Header.MetaOrigLength)
-            {
-                try
-                {
-                    metaBytes = ZlibStream.UncompressBuffer(bytes);
-                    hasInvalidLengths = !WoffMetadataValidator.ValidateLengths(Header.MetaOrigLength, (uint)metaBytes.Length);
-                }
-                catch (ZlibException e)
-                {
-                    exceptions.Add(new WoffUncompressException("Cannot uncompress metadata", e));
-                }
-            }
-
-            var xmlDocument = new XmlDocument();
-            var memoryStream = new MemoryStream(metaBytes);
-            using (var tr = new XmlTextReader(memoryStream))
-            {
-                tr.MoveToContent();
-                if (!string.Equals(tr.Encoding.WebName, "utf-8", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    exceptions.Add(new EncodingNotSupportedException("metadata must be encoded with UTF-8"));
-                }
-                else
-                {
-                    xmlDocument.Load(tr);
-                }
-                
-            }
-            
-
-            var aggregateException = xmlDocument.ValidateWoffMetadata();
-            if (aggregateException != null)
-            {
-                exceptions.AddRange(aggregateException.InnerExceptions);
-            }
-
-            if (hasInvalidLengths)
-            {
-                exceptions.Add(new InvalidRangeException("The stated metadata length is not equal to the actual value"));
-            }
-
-            if (exceptions.Any())
-            {
-                MetadataExceptions = exceptions;
-            }
-            else
-            {
-                Metadata = xmlDocument;
-            }
+            var reader = new WoffMetadataReader(bytes, Header);
+            reader.Process();
+            Metadata = reader.Document;
+            MetadataExceptions = reader.Exceptions;
         }
 
         private void ProcessFontTables()

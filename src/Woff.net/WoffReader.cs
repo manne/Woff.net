@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Globalization;
+
 using System.IO;
 
-using Mono;
-using WoffDotNet.Exceptions;
 using WoffDotNet.Readers;
 using WoffDotNet.Types;
 using WoffDotNet.Validators;
@@ -15,7 +13,9 @@ namespace WoffDotNet
     public class WoffReader
     {
         private readonly BinaryReader _binaryReader;
-        private Queue<WoffTableDirectory> tableDirectories;
+        private List<WoffTableDirectory> _tableDirectories;
+
+        private Dictionary<WoffTableDirectory, byte[]> _fontTableDictionary;
 
         private WoffHeader _header;
 
@@ -33,27 +33,51 @@ namespace WoffDotNet
 
             ProcessHeader();
             ProcessTableDirectories();
+            ProcessFontTables();
+        }
+
+        private void ProcessFontTables()
+        {
+            _fontTableDictionary = new Dictionary<WoffTableDirectory, byte[]>(_tableDirectories.Count);
+
+            for (int i = 0; i < _tableDirectories.Count; i++)
+            {
+                var tableDirectory = _tableDirectories[i];
+                var bytes = new byte[tableDirectory.CompLength];
+                if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
+                {
+                    throw new EndOfStreamException();
+                }
+
+                _fontTableDictionary.Add(tableDirectory, bytes);
+                var position = (uint)_binaryReader.BaseStream.Position;
+                var padding = WoffHelpers.Calculate4BytePadding(position);
+                _binaryReader.BaseStream.Position = position + padding;
+            }
         }
 
         private void ProcessTableDirectories()
         {
+            Contract.Ensures(_tableDirectories != null);
+            Contract.Ensures(_tableDirectories.Count == Header.NumTables);
+
             var tableDirectoriesBlockSize = Header.NumTables * WoffTableDirectory.Size;
             var bytes = new byte[tableDirectoriesBlockSize];
-            if (_binaryReader.Read(bytes, (int)WoffHeader.Size, (int)tableDirectoriesBlockSize) != tableDirectoriesBlockSize)
+            if (_binaryReader.Read(bytes, 0, (int)tableDirectoriesBlockSize) != tableDirectoriesBlockSize)
             {
                 throw new EndOfStreamException("The stream does not have the table directories");
             }
 
-            tableDirectories = new Queue<WoffTableDirectory>(Header.NumTables);
+            _tableDirectories = new List<WoffTableDirectory>(Header.NumTables);
 
             int offset = 0;
-            for (int i = 0; i < Header.NumTables; i++)
+            for (var i = 0; i < Header.NumTables; i++)
             {
                 var directoryBytes = new byte[WoffTableDirectory.Size];
                 Array.Copy(bytes, offset, directoryBytes, 0, (int)WoffTableDirectory.Size);
                 var directoryReader = new WoffTableDirectoryReader(directoryBytes);
                 var woffTableDirectory = directoryReader.Process();
-                tableDirectories.Enqueue(woffTableDirectory);
+                _tableDirectories.Add(woffTableDirectory);
                 offset += (int)WoffTableDirectory.Size;
             }
         }

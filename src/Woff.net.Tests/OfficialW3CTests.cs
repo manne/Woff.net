@@ -250,5 +250,18 @@ namespace WoffDotNet.Tests
             // assert
             cut.ShouldHaveCorrectlyAssignedMetadata();
         }
+
+        [Fact]
+        public void Valid_Metadata_Encoding_005()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_encoding_005);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.ShouldHaveCorrectlyAssignedMetadata();
+        }
     }
 }

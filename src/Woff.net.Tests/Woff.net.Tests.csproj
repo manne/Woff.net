@@ -79,6 +79,7 @@
     <None Include="Resources\metadata-encoding-002.woff" />
     <None Include="Resources\metadata-encoding-003.woff" />
     <None Include="Resources\metadata-encoding-004.woff" />
+    <None Include="Resources\metadata-encoding-005.woff" />
     <None Include="Resources\metadata-metaOrigLength-001.woff" />
     <None Include="Resources\metadata-metaOrigLength-002.woff" />
     <None Include="Resources\valid-001.woff" />

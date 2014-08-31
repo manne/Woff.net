@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
+using System.Net.Security;
 using System.Xml;
+
+using Blocker;
 
 using Ionic.Zlib;
 
@@ -24,6 +27,8 @@ namespace WoffDotNet
 
         private WoffHeader _header;
 
+        private NestedBlock _protocolBlock;
+
         public WoffReader(BinaryReader binaryReader)
         {
             Contract.Requires(binaryReader != null);
@@ -40,7 +45,17 @@ namespace WoffDotNet
             Contract.Ensures(HeaderState != null);
 
             ProcessHeader();
+            if (!_protocolBlock.Validate())
+            {
+                throw new Exception();
+            }
+
             ProcessTableDirectories();
+            if (_protocolBlock.Validate())
+            {
+                throw new Exception();
+            }
+
             ProcessFontTables();
             ProcessMetadata();
             ProcessPrivateData();
@@ -167,9 +182,26 @@ namespace WoffDotNet
                 throw new InvalidDataException("The header must have at least one font table");
             }
 
+            _protocolBlock = new NestedBlock(0, _header.Length);
+
             var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);
             HeaderState = new HeaderState(!hasIllegalMetadata, !hasIllegalPrivateData);
+
+            if (Header.MetaOffset > 0)
+            {
+                var metadataBlock = Block.CreateFromStartAndDistance(Header.MetaOffset, Header.MetaLength);
+                _protocolBlock.AddChild(metadataBlock);
+            }
+
+            if (Header.PrivOffset > 0)
+            {
+                var privateDataBlock = Block.CreateFromStartAndDistance(Header.PrivOffset, Header.PrivLength);
+                _protocolBlock.AddChild(privateDataBlock);
+            }
+
+            var tableDirectoryBlock = Block.CreateFromStartAndDistance(WoffHeader.Size, _header.NumTables * WoffTableDirectory.Size);
+            _protocolBlock.AddChild(tableDirectoryBlock);
         }
 
         public WoffHeader Header

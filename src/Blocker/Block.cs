@@ -13,6 +13,7 @@ namespace Blocker
             End = end;
         }
 
+        [Pure]
         public static Block CreateFromStartAndDistance(uint start, uint distance)
         {
             Contract.Requires(distance > 0);

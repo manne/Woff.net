@@ -120,6 +120,12 @@
     <None Include="Resources\woffmeta.rng" />
     <None Include="Resources\woffmeta_official.rng" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blocker\Blocker.csproj">
+      <Project>{873743B0-3081-4C5E-8525-A8B1A76FAD0E}</Project>
+      <Name>Blocker</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

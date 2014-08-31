@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq.Expressions;
+
+using Blocker.Exceptions;
 
 using FluentAssertions;
 
@@ -486,6 +489,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Blocks_Private_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_private_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockNotOnBoundaryException>();
+        }
+
+        [Fact]
         public void Invalid_Blocks_PrivateData_Absent_002()
         {
             // arrange
@@ -508,7 +524,7 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<Exception>();
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockNotOnBoundaryException>();
         }
     }
 }

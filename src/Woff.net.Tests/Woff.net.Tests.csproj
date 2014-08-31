@@ -72,6 +72,7 @@
     <None Include="packages.config" />
     <None Include="Resources\blocks-metadata-absent-001.woff" />
     <None Include="Resources\blocks-metadata-absent-002.woff" />
+    <None Include="Resources\blocks-private-001.woff" />
     <None Include="Resources\blocks-private-absent-001.woff" />
     <None Include="Resources\blocks-private-absent-002.woff" />
     <None Include="Resources\directory-4-byte-001.woff" />
@@ -100,6 +101,10 @@
     <None Include="Resources\valid-001.woff" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Blocker\Blocker.csproj">
+      <Project>{873743B0-3081-4C5E-8525-A8B1A76FAD0E}</Project>
+      <Name>Blocker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Woff.net\Woff.net.csproj">
       <Project>{A82A5C1A-68E7-4BD0-AA29-3B378B8D34C2}</Project>
       <Name>Woff.net</Name>

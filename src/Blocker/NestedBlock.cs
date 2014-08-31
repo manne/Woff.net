@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
+using System.Globalization;
+
+using Blocker.Exceptions;
 
 namespace Blocker
 {
     public class NestedBlock : Block
     {
         private readonly NestedBlockOptions _options;
+
+        private readonly List<Exception> _exceptions = new List<Exception>(10);
 
         private readonly List<Block> _childs = new List<Block>(10);
 
@@ -43,11 +49,15 @@ namespace Blocker
             {
                 if (!IsOnCorrectBoundary(child))
                 {
+                    _exceptions.Add(new BlockNotOnBoundaryException(string.Format(CultureInfo.InvariantCulture, "Block is not on a {0} boundary. It starts at {1}.", _options.Boundary, child.Start)));
+                    Exceptions = _exceptions;
                     return false;
                 }
             }
 
             return true;
         }
+
+        public IEnumerable<Exception> Exceptions { get; private set; }
     }
 }

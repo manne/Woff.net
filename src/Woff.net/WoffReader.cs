@@ -47,13 +47,13 @@ namespace WoffDotNet
             ProcessHeader();
             if (!_protocolBlock.Validate())
             {
-                throw new Exception();
+                throw new AggregateException("Following exceptions occured", _protocolBlock.Exceptions);
             }
 
             ProcessTableDirectories();
             if (!_protocolBlock.Validate())
             {
-                throw new Exception();
+                throw new AggregateException("Following exceptions occured", _protocolBlock.Exceptions);
             }
 
             ProcessFontTables();

@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Block.cs" />
+    <Compile Include="Exceptions\BlockNotOnBoundaryException.cs" />
+    <Compile Include="Exceptions\GeneralBlockException.cs" />
     <Compile Include="NestedBlock.cs" />
     <Compile Include="NestedBlockOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

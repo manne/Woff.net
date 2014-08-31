@@ -193,4 +193,7 @@
   <data name="directory_origLength_002" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\directory-origLength-002.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="header_numTables_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\header-numTables-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

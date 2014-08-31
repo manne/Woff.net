@@ -122,6 +122,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Header_NumTables_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.header_numTables_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidDataException>();
+        }
+
+        [Fact]
         public void Invalid_Metadata_MetaOrigLength_001_NoMetadata()
         {
             // arrange

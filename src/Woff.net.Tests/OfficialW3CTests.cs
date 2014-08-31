@@ -109,6 +109,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Header_Reserved_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.header_reserved_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidWoffReservedValueException>();
+        }
+
+        [Fact]
         public void Invalid_Metadata_MetaOrigLength_001_NoMetadata()
         {
             // arrange

@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\header-reserved-001.woff" />
     <None Include="Resources\header-signature-001.woff" />
     <None Include="Resources\InvalidHeader_WrongMagicNumber.dat" />
     <None Include="Resources\InvalidHeader_WrongReservedValue.dat" />

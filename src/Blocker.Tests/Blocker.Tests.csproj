@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9CAB96B-4EB2-4235-8F8A-37FBC65235D4}</ProjectGuid>
+    <ProjectGuid>{D30D90E0-EF82-435B-A191-2ECF52273C65}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WoffDotNet.Tests</RootNamespace>
-    <AssemblyName>WoffDotNet.Tests</AssemblyName>
+    <RootNamespace>Blocker.Tests</RootNamespace>
+    <AssemblyName>Blocker.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,16 +36,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
-      <HintPath>..\..\lib\FluentAssertions.3.1.229\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core">
-      <HintPath>..\..\lib\FluentAssertions.3.1.229\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <HintPath>..\..\Lib\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="xunit">
       <HintPath>..\..\lib\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\..\lib\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -57,58 +58,17 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="FluentAssertionExtensions.cs" />
-    <Compile Include="OfficialW3CTests.cs" />
+    <Compile Include="BlockTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="WoffHeaderValidatorTests.cs" />
-    <Compile Include="WoffHeaderReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\directory-origLength-001.woff" />
-    <None Include="Resources\directory-origLength-002.woff" />
-    <None Include="Resources\header-numTables-001.woff" />
-    <None Include="Resources\header-reserved-001.woff" />
-    <None Include="Resources\header-signature-001.woff" />
-    <None Include="Resources\InvalidHeader_WrongMagicNumber.dat" />
-    <None Include="Resources\InvalidHeader_WrongReservedValue.dat" />
-    <None Include="Resources\InvalidHeader_WrongSfntSizeValue.dat" />
-    <None Include="Resources\metadata-compression-001.woff" />
-    <None Include="Resources\metadata-encoding-001.woff" />
-    <None Include="Resources\metadata-encoding-002.woff" />
-    <None Include="Resources\metadata-encoding-003.woff" />
-    <None Include="Resources\metadata-encoding-004.woff" />
-    <None Include="Resources\metadata-encoding-005.woff" />
-    <None Include="Resources\metadata-encoding-006.woff" />
-    <None Include="Resources\metadata-metaOrigLength-001.woff" />
-    <None Include="Resources\metadata-metaOrigLength-002.woff" />
-    <None Include="Resources\metadata-schema-metadata-001.woff" />
-    <None Include="Resources\metadata-schema-metadata-002.woff" />
-    <None Include="Resources\metadata-schema-metadata-003.woff" />
-    <None Include="Resources\metadata-schema-metadata-004.woff" />
-    <None Include="Resources\tabledata-zlib-001.woff" />
-    <None Include="Resources\valid-001.woff" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Woff.net\Woff.net.csproj">
-      <Project>{A82A5C1A-68E7-4BD0-AA29-3B378B8D34C2}</Project>
-      <Name>Woff.net</Name>
+    <ProjectReference Include="..\Blocker\Blocker.csproj">
+      <Project>{873743B0-3081-4C5E-8525-A8B1A76FAD0E}</Project>
+      <Name>Blocker</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Resources\valid-002.woff" />
-    <None Include="Resources\valid-003.woff" />
-    <None Include="Resources\valid-004.woff" />
-    <None Include="Resources\ValidHeaderOnly.dat" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

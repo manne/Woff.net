@@ -86,6 +86,7 @@
     <None Include="Resources\metadata-schema-metadata-001.woff" />
     <None Include="Resources\metadata-schema-metadata-002.woff" />
     <None Include="Resources\metadata-schema-metadata-003.woff" />
+    <None Include="Resources\metadata-schema-metadata-004.woff" />
     <None Include="Resources\valid-001.woff" />
   </ItemGroup>
   <ItemGroup>

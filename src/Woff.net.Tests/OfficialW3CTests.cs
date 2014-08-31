@@ -526,5 +526,70 @@ namespace WoffDotNet.Tests
             // assert
             action.ShouldThrow<AggregateException>().WithInnerException<BlockNotOnBoundaryException>();
         }
+
+        [Fact]
+        public void Invalid_Directory_Overlaps_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_overlaps_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+        }
+
+        [Fact]
+        public void Invalid_Directory_Overlaps_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_overlaps_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+        }
+
+        [Fact]
+        public void Invalid_Directory_Overlaps_003()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_overlaps_003);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+        }
+
+        [Fact]
+        public void Invalid_Directory_Overlaps_004()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_overlaps_004);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+        }
+
+        [Fact]
+        public void Invalid_Directory_Overlaps_005()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_overlaps_005);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+        }
     }
 }

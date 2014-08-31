@@ -217,4 +217,19 @@
   <data name="directory_4_byte_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\directory-4-byte-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="directory_overlaps_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\directory-overlaps-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="directory_overlaps_002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\directory-overlaps-002.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="directory_overlaps_003" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\directory-overlaps-003.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="directory_overlaps_004" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\directory-overlaps-004.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="directory_overlaps_005" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\directory-overlaps-005.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

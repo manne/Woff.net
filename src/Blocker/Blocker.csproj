@@ -38,7 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Block.cs" />
+    <Compile Include="BlockExtensions.cs" />
     <Compile Include="Exceptions\BlockNotOnBoundaryException.cs" />
+    <Compile Include="Exceptions\BlockOverlappingException.cs" />
     <Compile Include="Exceptions\GeneralBlockException.cs" />
     <Compile Include="NestedBlock.cs" />
     <Compile Include="NestedBlockOptions.cs" />

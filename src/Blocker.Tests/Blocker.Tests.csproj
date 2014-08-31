@@ -58,6 +58,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BlockOverlappingTests.cs" />
     <Compile Include="BlockTests.cs" />
     <Compile Include="NestedBlockTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

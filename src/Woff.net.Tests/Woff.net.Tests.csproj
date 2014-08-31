@@ -47,6 +47,9 @@
     <Reference Include="xunit">
       <HintPath>..\..\lib\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\..\lib\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -72,12 +75,18 @@
     <None Include="packages.config" />
     <None Include="Resources\blocks-metadata-absent-001.woff" />
     <None Include="Resources\blocks-metadata-absent-002.woff" />
+    <None Include="Resources\blocks-overlap-001.woff" />
     <None Include="Resources\blocks-private-001.woff" />
     <None Include="Resources\blocks-private-absent-001.woff" />
     <None Include="Resources\blocks-private-absent-002.woff" />
     <None Include="Resources\directory-4-byte-001.woff" />
     <None Include="Resources\directory-origLength-001.woff" />
     <None Include="Resources\directory-origLength-002.woff" />
+    <None Include="Resources\directory-overlaps-001.woff" />
+    <None Include="Resources\directory-overlaps-002.woff" />
+    <None Include="Resources\directory-overlaps-003.woff" />
+    <None Include="Resources\directory-overlaps-004.woff" />
+    <None Include="Resources\directory-overlaps-005.woff" />
     <None Include="Resources\header-numTables-001.woff" />
     <None Include="Resources\header-reserved-001.woff" />
     <None Include="Resources\header-signature-001.woff" />

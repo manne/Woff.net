@@ -143,6 +143,56 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] directory_overlaps_001 {
+            get {
+                object obj = ResourceManager.GetObject("directory_overlaps_001", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] directory_overlaps_002 {
+            get {
+                object obj = ResourceManager.GetObject("directory_overlaps_002", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] directory_overlaps_003 {
+            get {
+                object obj = ResourceManager.GetObject("directory_overlaps_003", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] directory_overlaps_004 {
+            get {
+                object obj = ResourceManager.GetObject("directory_overlaps_004", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] directory_overlaps_005 {
+            get {
+                object obj = ResourceManager.GetObject("directory_overlaps_005", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] header_numTables_001 {
             get {
                 object obj = ResourceManager.GetObject("header_numTables_001", resourceCulture);

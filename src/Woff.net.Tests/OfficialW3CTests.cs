@@ -432,5 +432,18 @@ namespace WoffDotNet.Tests
             // assert
             action.ShouldThrow<InvalidRangeException>();
         }
+
+        [Fact]
+        public void Invalid_TableData_Zlib_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.tabledata_zlib_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<WoffUncompressException>();
+        }
     }
 }

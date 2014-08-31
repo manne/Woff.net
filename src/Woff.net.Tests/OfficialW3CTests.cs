@@ -406,5 +406,18 @@ namespace WoffDotNet.Tests
             // assert
             action.ShouldThrow<InvalidRangeException>();
         }
+
+        [Fact]
+        public void Invalid_Directory_OrigLength_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_origLength_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidRangeException>();
+        }
     }
 }

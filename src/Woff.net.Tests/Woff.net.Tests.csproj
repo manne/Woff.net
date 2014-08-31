@@ -71,6 +71,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\directory-origLength-001.woff" />
+    <None Include="Resources\directory-origLength-002.woff" />
     <None Include="Resources\header-reserved-001.woff" />
     <None Include="Resources\header-signature-001.woff" />
     <None Include="Resources\InvalidHeader_WrongMagicNumber.dat" />

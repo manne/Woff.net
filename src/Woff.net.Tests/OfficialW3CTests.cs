@@ -473,6 +473,32 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Blocks_PrivateData_Absent_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_private_absent_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidDataException>();
+        }
+
+        [Fact]
+        public void Invalid_Blocks_PrivateData_Absent_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_private_absent_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidDataException>();
+        }
+
+        [Fact]
         public void Invalid_Directory_4_Byte_001()
         {
             // arrange

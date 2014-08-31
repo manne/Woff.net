@@ -211,6 +211,16 @@ namespace WoffDotNet
                 throw new InvalidDataException("The metadata orig length is set to zero, but the meta offset is not set to zero");
             }
 
+            if (Header.PrivOffset == 0 && Header.PrivLength > 0)
+            {
+                throw new InvalidDataException("The privatedata offset is set to zero, but the privatedata length is not set to zero");
+            }
+
+            if (Header.PrivOffset > 0 && Header.PrivLength == 0)
+            {
+                throw new InvalidDataException("The privatedata length is set to zero, but the privatedata offset is not set to zero");
+            }
+
             if (Header.MetaOffset > 0)
             {
                 var metadataBlock = Block.CreateFromStartAndDistance(Header.MetaOffset, Header.MetaLength);

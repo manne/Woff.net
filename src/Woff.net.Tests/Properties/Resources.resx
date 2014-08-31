@@ -199,6 +199,12 @@
   <data name="tabledata_zlib_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tabledata-zlib-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="blocks_metadata_absent_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blocks-metadata-absent-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="blocks_metadata_absent_002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blocks-metadata-absent-002.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="directory_4_byte_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\directory-4-byte-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

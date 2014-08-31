@@ -191,6 +191,26 @@ namespace WoffDotNet
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);
             HeaderState = new HeaderState(!hasIllegalMetadata, !hasIllegalPrivateData);
 
+            if (Header.MetaOffset == 0 && Header.MetaLength > 0)
+            {
+                throw new InvalidDataException("The metadata offset is set to zero, but the length is not set to zero");
+            }
+
+            if (Header.MetaOffset == 0 && Header.MetaOrigLength > 0)
+            {
+                throw new InvalidDataException("The metadata offset is set to zero, but the original length is not set to zero");
+            }
+
+            if (Header.MetaOffset > 0 && Header.MetaLength == 0)
+            {
+                throw new InvalidDataException("The metadata length is set to zero, but the meta offset is not set to zero");
+            }
+
+            if (Header.MetaOffset > 0 && Header.MetaOrigLength == 0)
+            {
+                throw new InvalidDataException("The metadata orig length is set to zero, but the meta offset is not set to zero");
+            }
+
             if (Header.MetaOffset > 0)
             {
                 var metadataBlock = Block.CreateFromStartAndDistance(Header.MetaOffset, Header.MetaLength);

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Xml;
 
 using Ionic.Zlib;
@@ -18,9 +17,10 @@ namespace WoffDotNet
     public class WoffReader
     {
         private readonly BinaryReader _binaryReader;
+
         private List<WoffTableDirectory> _tableDirectories;
 
-        private Dictionary<WoffTableDirectory, byte[]> _fontTableDictionary;
+        private Dictionary<WoffTableDirectory, Tuple<byte[], byte[]>> _fontTableDictionary;
 
         private WoffHeader _header;
 
@@ -86,7 +86,7 @@ namespace WoffDotNet
 
         private void ProcessFontTables()
         {
-            _fontTableDictionary = new Dictionary<WoffTableDirectory, byte[]>(_tableDirectories.Count);
+            _fontTableDictionary = new Dictionary<WoffTableDirectory, Tuple<byte[], byte[]>>(_tableDirectories.Count);
 
             for (int i = 0; i < _tableDirectories.Count; i++)
             {
@@ -97,7 +97,25 @@ namespace WoffDotNet
                     throw new EndOfStreamException();
                 }
 
-                _fontTableDictionary.Add(tableDirectory, bytes);
+                var uncompressedFontTable = bytes;
+                if (tableDirectory.CompLength <= tableDirectory.OrigLength)
+                {
+                    try
+                    {
+                        uncompressedFontTable = ZlibStream.UncompressBuffer(bytes);
+                    }
+                    catch (ZlibException e)
+                    {
+                        throw new WoffUncompressException("Could not decompress font table", e);
+                    }
+                }
+
+                if (uncompressedFontTable.Length != tableDirectory.OrigLength)
+                {
+                    throw new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The stated font table length {0} is not equal to the actual value {1}", tableDirectory.OrigLength, uncompressedFontTable.Length));
+                }
+
+                _fontTableDictionary.Add(tableDirectory, new Tuple<byte[], byte[]>(bytes, uncompressedFontTable));
                 var position = (uint)_binaryReader.BaseStream.Position;
                 var padding = WoffHelpers.Calculate4BytePadding(position);
                 _binaryReader.BaseStream.Position = position + padding;

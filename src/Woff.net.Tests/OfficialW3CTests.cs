@@ -393,5 +393,18 @@ namespace WoffDotNet.Tests
             // assert
             cut.MetadataExceptions.Should().NotBeNullOrEmpty();
         }
+
+        [Fact]
+        public void Invalid_Directory_OrigLength_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_origLength_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<WoffUncompressException>();
+        }
     }
 }

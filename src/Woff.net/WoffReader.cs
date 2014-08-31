@@ -91,6 +91,9 @@ namespace WoffDotNet
             for (int i = 0; i < _tableDirectories.Count; i++)
             {
                 var tableDirectory = _tableDirectories[i];
+
+                _binaryReader.BaseStream.Position = tableDirectory.Offset;
+
                 var bytes = new byte[tableDirectory.CompLength];
                 if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
                 {
@@ -98,7 +101,7 @@ namespace WoffDotNet
                 }
 
                 var uncompressedFontTable = bytes;
-                if (tableDirectory.CompLength <= tableDirectory.OrigLength)
+                if (tableDirectory.CompLength != tableDirectory.OrigLength)
                 {
                     try
                     {
@@ -116,9 +119,6 @@ namespace WoffDotNet
                 }
 
                 _fontTableDictionary.Add(tableDirectory, new Tuple<byte[], byte[]>(bytes, uncompressedFontTable));
-                var position = (uint)_binaryReader.BaseStream.Position;
-                var padding = WoffHelpers.Calculate4BytePadding(position);
-                _binaryReader.BaseStream.Position = position + padding;
             }
         }
 
@@ -161,6 +161,11 @@ namespace WoffDotNet
             var headerReader = new WoffHeaderReader(bytes);
             headerReader.Process();
             _header = headerReader.Header;
+
+            if (_header.NumTables == 0)
+            {
+                throw new InvalidDataException("The header must have at least one font table");
+            }
 
             var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);

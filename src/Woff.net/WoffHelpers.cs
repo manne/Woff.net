@@ -73,5 +73,40 @@ namespace WoffDotNet
                 return currentEncoding;
             }
         }
+
+        public static char[] UInt32BEToCharArray(this UInt32 value)
+        {
+            Contract.Ensures(Contract.Result<char[]>() != null);
+            Contract.Ensures(Contract.Result<char[]>().Length == 4);
+
+            // only for big endian
+            var c = new char[4];
+            c[3] = (char)(value & 0x000000ff);
+            c[2] = (char)((value & 0x0000ff00) >> 8);
+            c[1] = (char)((value & 0x00ff0000) >> 16);
+            c[0] = (char)((value & 0xff000000) >> 24);
+            return c;
+        }
+
+        ///<summary>
+        /// Convert a UInt32 into strings, <param name="value" /> must be in big endian.
+        /// 0x0 are replaced with an x20. Therefore the string is valid and printable.
+        /// </summary>
+        public static string UInt32ToString(this UInt32 value)
+        {
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(Contract.Result<string>().Length == 4);
+
+            var c = UInt32BEToCharArray(value);
+            if (c[3] == char.MinValue)
+                c[3] = ' ';
+            if (c[2] == char.MinValue)
+                c[2] = ' ';
+            if (c[1] == char.MinValue)
+                c[1] = ' ';
+            if (c[0] == char.MinValue)
+                c[0] = ' ';
+            return new string(c);
+        }
     }
 }

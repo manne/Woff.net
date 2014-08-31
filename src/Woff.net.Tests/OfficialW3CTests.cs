@@ -404,7 +404,7 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<WoffUncompressException>();
+            action.ShouldThrow<InvalidRangeException>();
         }
     }
 }

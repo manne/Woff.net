@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace WoffDotNet.Types
 {
@@ -15,6 +16,7 @@ namespace WoffDotNet.Types
             OrigCheckSum = origCheckSum;
         }
 
+        [DebuggerDisplay("{TagAsString()}")]
         public uint Tag { get; set; }
 
         public uint Offset { get; set; }
@@ -24,5 +26,14 @@ namespace WoffDotNet.Types
         public uint OrigLength { get; set; }
 
         public uint OrigCheckSum { get; set; }
+
+        /// <summary>
+        /// Returns the tag as a printable string.
+        /// </summary>
+        /// <returns>The tag as a printable string.</returns>
+        public String TagAsString()
+        {
+            return new string(Tag.UInt32BEToCharArray());
+        }
     }
 }

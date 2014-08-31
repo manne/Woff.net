@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BlockTests.cs" />
+    <Compile Include="NestedBlockTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

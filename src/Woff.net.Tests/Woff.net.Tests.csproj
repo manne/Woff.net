@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\directory-4-byte-001.woff" />
     <None Include="Resources\directory-origLength-001.woff" />
     <None Include="Resources\directory-origLength-002.woff" />
     <None Include="Resources\header-numTables-001.woff" />

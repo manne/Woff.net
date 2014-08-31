@@ -445,5 +445,18 @@ namespace WoffDotNet.Tests
             // assert
             action.ShouldThrow<WoffUncompressException>();
         }
+
+        [Fact]
+        public void Invalid_Directory_4_Byte_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_4_byte_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<Exception>();
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace WoffDotNet
             }
 
             ProcessTableDirectories();
-            if (_protocolBlock.Validate())
+            if (!_protocolBlock.Validate())
             {
                 throw new Exception();
             }
@@ -159,6 +159,9 @@ namespace WoffDotNet
                 var directoryReader = new WoffTableDirectoryReader(directoryBytes);
                 var woffTableDirectory = directoryReader.Process();
                 _tableDirectories.Add(woffTableDirectory);
+
+                _protocolBlock.AddChild(Block.CreateFromStartAndDistance(woffTableDirectory.Offset, woffTableDirectory.CompLength));
+
                 offset += (int)WoffTableDirectory.Size;
             }
         }
@@ -182,7 +185,7 @@ namespace WoffDotNet
                 throw new InvalidDataException("The header must have at least one font table");
             }
 
-            _protocolBlock = new NestedBlock(0, _header.Length);
+            _protocolBlock = new NestedBlock(0, _header.Length, new NestedBlockOptions(3, 4));
 
             var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);

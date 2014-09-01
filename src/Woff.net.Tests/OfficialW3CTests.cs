@@ -450,6 +450,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Blocks_Overlap_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_overlap_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<BlockOverlappingException>();
+        }
+
+        [Fact]
         public void Invalid_Blocks_Metadata_Absent_001()
         {
             // arrange

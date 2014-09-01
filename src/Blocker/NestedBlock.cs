@@ -46,14 +46,13 @@ namespace Blocker
             _childs.Add(child);
         }
 
-        public bool Validate()
+        public bool Validate(bool checkPadding = false)
         {
             var result = true;
             _childs.Sort((block, block1) => block.Start.CompareTo(block1.Start));
-            var enumerator = _childs.GetEnumerator();
-            while (enumerator.MoveNext())
+            for (int i = 0; i < _childs.Count; i++)
             {
-                var current = enumerator.Current;
+                var current = _childs[i];
 
                 var aggregateException = CheckSingleBlock(current);
                 if (!aggregateException)
@@ -64,6 +63,17 @@ namespace Blocker
                 if (OverlapsWithAnyBlock(current))
                 {
                     result = false;
+                }
+
+                if (checkPadding && (i + 1 < _childs.Count))
+                {
+                    var next = _childs[i + 1];
+                    var diff = next.Start - current.End;
+                    if (diff > _options.MaxPadding)
+                    {
+                        _exceptions.Add(new BlockMaxPaddingExceededException(string.Format(CultureInfo.InvariantCulture, "The maximal padding between Block {0} and Block {1} is exceeded.", current, next)));
+                        result = false;
+                    }
                 }
             }
 

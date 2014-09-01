@@ -51,7 +51,7 @@ namespace WoffDotNet
             }
 
             ProcessTableDirectories();
-            if (!_protocolBlock.Validate())
+            if (!_protocolBlock.Validate(true))
             {
                 throw new AggregateException("Following exceptions occured", _protocolBlock.Exceptions);
             }

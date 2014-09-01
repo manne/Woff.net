@@ -76,6 +76,7 @@
     <None Include="Resources\blocks-metadata-absent-001.woff" />
     <None Include="Resources\blocks-metadata-absent-002.woff" />
     <None Include="Resources\blocks-overlap-001.woff" />
+    <None Include="Resources\blocks-overlap-002.woff" />
     <None Include="Resources\blocks-private-001.woff" />
     <None Include="Resources\blocks-private-absent-001.woff" />
     <None Include="Resources\blocks-private-absent-002.woff" />

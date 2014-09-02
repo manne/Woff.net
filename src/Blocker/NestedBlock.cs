@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
 using Blocker.Exceptions;
 
@@ -46,13 +44,39 @@ namespace Blocker
             _childs.Add(child);
         }
 
+        public void AddRange(params Block[] childs)
+        {
+            Contract.Requires(childs != null);
+
+            foreach (var child in childs)
+            {
+                _childs.Add(child);
+            }
+        }
+
         public bool Validate(bool checkPadding = false)
         {
             var result = true;
             _childs.Sort((block, block1) => block.Start.CompareTo(block1.Start));
-            for (int i = 0; i < _childs.Count; i++)
+            for (var i = 0; i < _childs.Count; i++)
             {
                 var current = _childs[i];
+
+                if (current.Start > End)
+                {
+                    result = false;
+                    _exceptions.Add(new BlockStartsBeyondContainerException(string.Format(CultureInfo.InvariantCulture, "Block {0} starts beyond the end ({1}) of the container", current, End)));
+                }
+
+                var currentAsNested = current as NestedBlock;
+                if (currentAsNested != null)
+                {
+                    if (!currentAsNested.Validate(checkPadding))
+                    {
+                        result = false;
+                        _exceptions.AddRange(currentAsNested.Exceptions);
+                    }
+                }
 
                 var aggregateException = CheckSingleBlock(current);
                 if (!aggregateException)
@@ -65,14 +89,34 @@ namespace Blocker
                     result = false;
                 }
 
-                if (checkPadding && (i + 1 < _childs.Count))
+                if (checkPadding)
                 {
-                    var next = _childs[i + 1];
-                    var diff = next.Start - current.End;
-                    if (diff > _options.MaxPadding)
+                    if (i + 1 < _childs.Count)
                     {
-                        _exceptions.Add(new BlockMaxPaddingExceededException(string.Format(CultureInfo.InvariantCulture, "The maximal padding between Block {0} and Block {1} is exceeded.", current, next)));
-                        result = false;
+                        var next = _childs[i + 1];
+                        var diff = next.Start - current.End;
+                        if (diff > _options.MaxPadding)
+                        {
+                            _exceptions.Add(new BlockMaxPaddingExceededException(string.Format(CultureInfo.InvariantCulture, "The maximal padding between Block {0} and Block {1} is exceeded.", current, next)));
+                            result = false;
+                        }
+                    }
+
+                    if (i == _childs.Count - 1)
+                    {
+                        // cast, otherwise there can be a overflow
+                        long diff = (long)End - current.End;
+                        if (diff > 0)
+                        {
+                            _exceptions.Add(new BlockMaxPaddingExceededException(string.Format(CultureInfo.InvariantCulture, "There is additional space between the last child {0} and the end {1}", current, End)));
+                            result = false;
+                        }
+
+                        if (diff < 0)
+                        {
+                            _exceptions.Add(new BlockOverlappingException(string.Format(CultureInfo.InvariantCulture, "There is additional space between the last child {0} and the end {1}", current, End)));
+                            result = false;
+                        }
                     }
                 }
             }
@@ -85,13 +129,10 @@ namespace Blocker
         {
             var result = false;
             var otherBlocks = _childs.Except(new[] { block });
-            foreach (var otherBlock in otherBlocks)
+            foreach (var otherBlock in otherBlocks.Where(block.IsOverlapping))
             {
-                if (block.IsOverlapping(otherBlock))
-                {
-                    result = true;
-                    _exceptions.Add(new BlockOverlappingException(string.Format(CultureInfo.InvariantCulture, "Blocks are overlapping, {0} and {1}.", block, otherBlock)));
-                }
+                result = true;
+                _exceptions.Add(new BlockOverlappingException(string.Format(CultureInfo.InvariantCulture, "Blocks are overlapping, {0} and {1}.", block, otherBlock)));
             }
 
             return result;

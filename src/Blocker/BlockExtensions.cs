@@ -40,5 +40,13 @@ namespace Blocker
         {
                return val > low && val < high;
         }
+
+        public static uint CalculateNextBytePadding(uint position, uint boundary)
+        {
+            Contract.Ensures(Contract.Result<uint>() <= boundary);
+
+            uint mod = position % boundary;
+            return (mod == 0) ? 0 : boundary - mod;
+        }
     }
 }

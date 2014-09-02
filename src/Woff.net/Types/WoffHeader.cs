@@ -3,18 +3,20 @@ using System.Collections.Generic;
 
 namespace WoffDotNet.Types
 {
-
     /// <summary>
     /// File header with basic font type and version, along with offsets to metadata and private data blocks.
     /// </summary>
     public sealed class WoffHeader : IEquatable<WoffHeader>, ICloneable
     {
+        /// <summary>
+        /// The size of the WOFF header
+        /// </summary>
         public const uint Size = 44;
 
         /// <summary>
         /// The magic number for WOFF files.
         /// </summary>
-        public const UInt32 MagicNumberUInt = 0x774F4646;
+        public const uint MagicNumberUInt = 0x774F4646;
 
         /// <summary>
         /// Creates a new instance of <see cref="WoffHeader"/>.

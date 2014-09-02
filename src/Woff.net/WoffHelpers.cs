@@ -40,7 +40,7 @@ namespace WoffDotNet
         {
             Contract.Ensures(Contract.Result<UInt32>() <= 3);
 
-            UInt32 mod = position % 4;
+            uint mod = position % 4;
             return (mod == 0) ? 0 : 4 - mod;
         }
 
@@ -88,7 +88,7 @@ namespace WoffDotNet
             return c;
         }
 
-        ///<summary>
+        /// <summary>
         /// Convert a UInt32 into strings, <param name="value" /> must be in big endian.
         /// 0x0 are replaced with an x20. Therefore the string is valid and printable.
         /// </summary>

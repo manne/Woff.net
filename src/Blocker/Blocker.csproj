@@ -42,6 +42,7 @@
     <Compile Include="Exceptions\BlockMaxPaddingExceededException.cs" />
     <Compile Include="Exceptions\BlockNotOnBoundaryException.cs" />
     <Compile Include="Exceptions\BlockOverlappingException.cs" />
+    <Compile Include="Exceptions\BlockStartsBeyondContainerException.cs" />
     <Compile Include="Exceptions\GeneralBlockException.cs" />
     <Compile Include="NestedBlock.cs" />
     <Compile Include="NestedBlockOptions.cs" />

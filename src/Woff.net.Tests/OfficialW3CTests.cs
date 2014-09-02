@@ -459,7 +459,20 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<AggregateException>().WithInnerException<BlockMaxPaddingExceededException>();
+            action.ShouldThrow<InvalidDataException>();
+        }
+
+        [Fact]
+        public void Invalid_Blocks_Extraneous_Data_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_extraneous_data_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.GetType() == typeof(BlockMaxPaddingExceededException));
         }
 
         [Fact]
@@ -608,6 +621,8 @@ namespace WoffDotNet.Tests
         [Fact]
         public void Invalid_Directory_Overlaps_003()
         {
+            // there should be caught thrown exceptions
+
             // arrange
             var cut = GetReader(Resources.directory_overlaps_003);
 
@@ -615,12 +630,14 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockMaxPaddingExceededException>();
         }
 
         [Fact]
         public void Invalid_Directory_Overlaps_004()
         {
+            // there should be caught thrown exceptions
+
             // arrange
             var cut = GetReader(Resources.directory_overlaps_004);
 
@@ -628,7 +645,7 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.GetType() == typeof(BlockMaxPaddingExceededException));
         }
 
         [Fact]

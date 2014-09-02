@@ -7,7 +7,6 @@ namespace WoffDotNet.Validators
     {
         public static AggregateException ValidateWoffMetadata(this XmlDocument document)
         {
-            
             return null;
         }
 

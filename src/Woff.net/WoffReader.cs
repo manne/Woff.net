@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
-using System.Net.Security;
 using System.Xml;
 
 using Blocker;
@@ -20,6 +19,10 @@ namespace WoffDotNet
     public class WoffReader
     {
         private readonly BinaryReader _binaryReader;
+
+        public const uint ByteBoundary = 4;
+
+        public const uint MaxPadding = ByteBoundary - 1;
 
         private List<WoffTableDirectory> _tableDirectories;
 
@@ -38,7 +41,6 @@ namespace WoffDotNet
 
             _binaryReader = binaryReader;
         }
-
 
         public void Process()
         {
@@ -150,8 +152,10 @@ namespace WoffDotNet
             }
 
             _tableDirectories = new List<WoffTableDirectory>(Header.NumTables);
+            var tableDirectoriesBlocks = new List<Block>(Header.NumTables);
 
             int offset = 0;
+            uint maxTableDirectoriesSizeWithoutLastPadding = 0;
             for (var i = 0; i < Header.NumTables; i++)
             {
                 var directoryBytes = new byte[WoffTableDirectory.Size];
@@ -160,10 +164,34 @@ namespace WoffDotNet
                 var woffTableDirectory = directoryReader.Process();
                 _tableDirectories.Add(woffTableDirectory);
 
-                _protocolBlock.AddChild(Block.CreateFromStartAndDistance(woffTableDirectory.Offset, woffTableDirectory.CompLength));
+                maxTableDirectoriesSizeWithoutLastPadding += woffTableDirectory.CompLength;
 
+                tableDirectoriesBlocks.Add(Block.CreateFromStartAndDistance(woffTableDirectory.Offset, woffTableDirectory.CompLength));
                 offset += (int)WoffTableDirectory.Size;
+
+                if (i < Header.NumTables - 1)
+                {
+                    maxTableDirectoriesSizeWithoutLastPadding += BlockExtensions.CalculateNextBytePadding(maxTableDirectoriesSizeWithoutLastPadding, ByteBoundary);
+                }
             }
+
+            _tableDirectories.Sort((directory, tableDirectory) => directory.Offset.CompareTo(tableDirectory.Offset));
+            tableDirectoriesBlocks.Sort((block, block1) => block.Start.CompareTo(block1.Start));
+            var start = WoffHeader.Size + tableDirectoriesBlockSize;
+            var end = start + maxTableDirectoriesSizeWithoutLastPadding + 1;
+            if (start != tableDirectoriesBlocks[0].Start)
+            {
+                throw new InvalidDataException(string.Format("The table data does not start ({0}) at the required position ({1})", tableDirectoriesBlocks[0].Start, start));
+            }
+
+            if (Header.MetaOffset > 0 || Header.PrivOffset > 0)
+            {
+                end += BlockExtensions.CalculateNextBytePadding(end, ByteBoundary);
+            }
+
+            var nestedBlock = new NestedBlock(start, end, new NestedBlockOptions(MaxPadding, ByteBoundary));
+            nestedBlock.AddRange(tableDirectoriesBlocks.ToArray());
+            _protocolBlock.AddChild(nestedBlock);
         }
 
         private void ProcessHeader()
@@ -185,7 +213,8 @@ namespace WoffDotNet
                 throw new InvalidDataException("The header must have at least one font table");
             }
 
-            _protocolBlock = new NestedBlock(0, _header.Length, new NestedBlockOptions(3, 4));
+            _protocolBlock = new NestedBlock(0, _header.Length, new NestedBlockOptions(MaxPadding, ByteBoundary));
+            _protocolBlock.AddChild(Block.CreateFromStartAndDistance(0, WoffHeader.Size));
 
             var hasIllegalMetadata = WoffHeaderValidator.HasIllegalMetadata(_header);
             var hasIllegalPrivateData = WoffHeaderValidator.HasIllegalPrivateData(_header);

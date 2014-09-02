@@ -211,27 +211,28 @@ namespace Mono
                 if (Buffer == null)
                 {
                     Buffer = group;
-                    this._next = group.Length;
+                    _next = group.Length;
                     return;
                 }
+
                 if (AlignValue != 0)
                 {
-                    this._next = Align(this._next, AlignValue == -1 ? group.Length : AlignValue);
+                    _next = Align(_next, AlignValue == -1 ? group.Length : AlignValue);
                     AlignValue = 0;
                 }
 
-                if (this._next + group.Length > Buffer.Length)
+                if (_next + group.Length > Buffer.Length)
                 {
-                    byte[] nb = new byte[Math.Max(this._next, 16) * 2 + group.Length];
+                    byte[] nb = new byte[Math.Max(_next, 16) * 2 + group.Length];
                     Array.Copy(Buffer, nb, Buffer.Length);
-                    Array.Copy(group, 0, nb, this._next, group.Length);
-                    this._next = this._next + group.Length;
+                    Array.Copy(group, 0, nb, _next, group.Length);
+                    _next = _next + group.Length;
                     Buffer = nb;
                 }
                 else
                 {
-                    Array.Copy(group, 0, Buffer, this._next, group.Length);
-                    this._next += group.Length;
+                    Array.Copy(group, 0, Buffer, _next, group.Length);
+                    _next += group.Length;
                 }
             }
 
@@ -240,10 +241,10 @@ namespace Mono
                 if (Buffer == null)
                     return new byte[0];
 
-                if (Buffer.Length != this._next)
+                if (Buffer.Length != _next)
                 {
-                    byte[] b = new byte[this._next];
-                    Array.Copy(Buffer, b, this._next);
+                    byte[] b = new byte[_next];
+                    Array.Copy(Buffer, b, _next);
                     return b;
                 }
                 return Buffer;

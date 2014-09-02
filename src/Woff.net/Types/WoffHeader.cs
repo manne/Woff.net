@@ -64,10 +64,26 @@ namespace WoffDotNet.Types
         {
             public bool Equals(WoffHeader x, WoffHeader y)
             {
-                if (ReferenceEquals(x, y)) return true;
-                if (ReferenceEquals(x, null)) return false;
-                if (ReferenceEquals(y, null)) return false;
-                if (x.GetType() != y.GetType()) return false;
+                if (ReferenceEquals(x, y))
+                {
+                    return true;
+                }
+
+                if (ReferenceEquals(x, null))
+                {
+                    return false;
+                }
+
+                if (ReferenceEquals(y, null))
+                {
+                    return false;
+                }
+
+                if (x.GetType() != y.GetType())
+                {
+                    return false;
+                }
+
                 return x.Signature == y.Signature && x.Flavor == y.Flavor && x.Length == y.Length && x.NumTables == y.NumTables && x.Reserved == y.Reserved && x.TotalSfntSize == y.TotalSfntSize && x.MajorVersion == y.MajorVersion && x.MinorVersion == y.MinorVersion && x.MetaOffset == y.MetaOffset && x.MetaLength == y.MetaLength && x.MetaOrigLength == y.MetaOrigLength && x.PrivOffset == y.PrivOffset && x.PrivLength == y.PrivLength;
             }
 

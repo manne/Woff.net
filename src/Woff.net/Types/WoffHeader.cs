@@ -19,24 +19,48 @@ namespace WoffDotNet.Types
         public const uint MagicNumberUInt = 0x774F4646;
 
         /// <summary>
-        /// Creates a new instance of <see cref="WoffHeader"/>.
+        /// Initializes a new instance of the <see cref="WoffHeader"/> class. 
         /// </summary>
-        /// <param name="sig">Signature, must be <c>0x774F4646</c>.</param>
-        /// <param name="flav">The "sfnt version" of the input font.</param>
-        /// <param name="len">Total size of the WOFF file.</param>
-        /// <param name="numTables">Number of entries in directory of font tables.</param>
-        /// <param name="reserved">Reserved; set to zero.</param>
-        /// <param name="totalSfntSize">Total size needed for the uncompressed font data, including the sfnt header, directory, and font tables (including padding).</param>
-        /// <param name="majorVersion">Major version of the WOFF file.</param>
-        /// <param name="minorVersion">Minor version of the WOFF file.</param>
-        /// <param name="metaOffset">Offset to metadata block, from beginning of WOFF file.</param>
-        /// <param name="metaLength">Length of compressed metadata block.</param>
-        /// <param name="metaOrigLength">Uncompressed size of metadata block.</param>
-        /// <param name="privOffset">Offset to private data block, from beginning of WOFF file.</param>
-        /// <param name="privLength">Length of private data block.</param>
-        public WoffHeader(UInt32 sig, UInt32 flav, UInt32 len, UInt16 numTables, UInt16 reserved, UInt32 totalSfntSize,
-            UInt32 majorVersion, UInt32 minorVersion, UInt32 metaOffset, UInt32 metaLength, UInt32 metaOrigLength,
-            UInt32 privOffset, UInt32 privLength)
+        /// <param name="sig">
+        /// Signature, must be <c>0x774F4646</c>.
+        /// </param>
+        /// <param name="flav">
+        /// The "SFNT version" of the input font.
+        /// </param>
+        /// <param name="len">
+        /// Total size of the WOFF file.
+        /// </param>
+        /// <param name="numTables">
+        /// Number of entries in directory of font tables.
+        /// </param>
+        /// <param name="reserved">
+        /// Reserved; set to zero.
+        /// </param>
+        /// <param name="totalSfntSize">
+        /// Total size needed for the uncompressed font data, including the SFNT header, directory, and font tables (including padding).
+        /// </param>
+        /// <param name="majorVersion">
+        /// Major version of the WOFF file.
+        /// </param>
+        /// <param name="minorVersion">
+        /// Minor version of the WOFF file.
+        /// </param>
+        /// <param name="metaOffset">
+        /// Offset to metadata block, from beginning of WOFF file.
+        /// </param>
+        /// <param name="metaLength">
+        /// Length of compressed metadata block.
+        /// </param>
+        /// <param name="metaOrigLength">
+        /// Uncompressed size of metadata block.
+        /// </param>
+        /// <param name="privOffset">
+        /// Offset to private data block, from beginning of WOFF file.
+        /// </param>
+        /// <param name="privLength">
+        /// Length of private data block.
+        /// </param>
+        public WoffHeader(uint sig, uint flav, uint len, ushort numTables, ushort reserved, uint totalSfntSize, uint majorVersion, uint minorVersion, uint metaOffset, uint metaLength, uint metaOrigLength, uint privOffset, uint privLength)
         {
             Signature = sig;
             Flavor = flav;
@@ -129,8 +153,16 @@ namespace WoffDotNet.Types
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(WoffHeader other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
             return Signature == other.Signature && Flavor == other.Flavor && Length == other.Length && NumTables == other.NumTables && Reserved == other.Reserved && TotalSfntSize == other.TotalSfntSize && MajorVersion == other.MajorVersion && MinorVersion == other.MinorVersion && MetaOffset == other.MetaOffset && MetaLength == other.MetaLength && MetaOrigLength == other.MetaOrigLength && PrivOffset == other.PrivOffset && PrivLength == other.PrivLength;
         }
 
@@ -143,9 +175,21 @@ namespace WoffDotNet.Types
         /// <param name="obj">The object to compare with the current object. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(WoffHeader)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != typeof(WoffHeader))
+            {
+                return false;
+            }
+
             return Equals((WoffHeader)obj);
         }
 
@@ -202,68 +246,68 @@ namespace WoffDotNet.Types
         #endregion
 
         /// <summary>
-        /// Must be 0x774F4646 ('wOFF').
+        /// Gets the signature. Must be 0x774F4646 ('wOFF').
         /// </summary>
-        public UInt32 Signature { get; private set; }
+        public uint Signature { get; private set; }
 
         /// <summary>
-        /// The "sfnt version" of the input font.
+        /// Gets the "SFNT version" of the input font.
         /// </summary>
-        public UInt32 Flavor { get; private set; }
+        public uint Flavor { get; private set; }
 
         /// <summary>
-        /// Total size of the WOFF file.
+        /// Gets the total size of the WOFF file.
         /// </summary>
-        public UInt32 Length { get; private set; }
+        public uint Length { get; private set; }
 
         /// <summary>
-        /// Number of entries in directory of font tables.
+        /// Gets the number of entries in directory of font tables.
         /// </summary>
-        public UInt16 NumTables { get; private set; }
+        public ushort NumTables { get; private set; }
 
         /// <summary>
-        /// Reserved; set to zero.
+        /// Gets the Reserved value; set to zero.
         /// </summary>
-        public UInt16 Reserved { get; private set; }
+        public ushort Reserved { get; private set; }
 
         /// <summary>
-        /// Total size needed for the uncompressed font data, including the sfnt header, directory, and font tables (including padding).
+        /// Gets the total size needed for the uncompressed font data, including the sfnt header, directory, and font tables (including padding).
         /// </summary>
-        public UInt32 TotalSfntSize { get; private set; }
+        public uint TotalSfntSize { get; private set; }
 
         /// <summary>
-        /// Major version of the WOFF file.
+        /// Gets the major version of the WOFF file.
         /// </summary>
-        public UInt32 MajorVersion { get; private set; }
+        public uint MajorVersion { get; private set; }
 
         /// <summary>
-        /// Minor version of the WOFF file.
+        /// Gets the minor version of the WOFF file.
         /// </summary>
-        public UInt32 MinorVersion { get; private set; }
+        public uint MinorVersion { get; private set; }
 
         /// <summary>
-        /// Offset to metadata block, from beginning of WOFF file.
+        /// Gets the offset to metadata block, from beginning of WOFF file.
         /// </summary>
-        public UInt32 MetaOffset { get; private set; }
+        public uint MetaOffset { get; private set; }
 
         /// <summary>
-        /// Length of compressed metadata block.
+        /// Gets the length of compressed metadata block.
         /// </summary>
-        public UInt32 MetaLength { get; private set; }
+        public uint MetaLength { get; private set; }
 
         /// <summary>
-        /// Uncompressed size of metadata block.
+        /// Gets the uncompressed size of metadata block.
         /// </summary>
-        public UInt32 MetaOrigLength { get; private set; }
+        public uint MetaOrigLength { get; private set; }
 
         /// <summary>
-        /// Offset to private data block, from beginning of WOFF file.
+        /// Gets the offset to private data block, from beginning of WOFF file.
         /// </summary>
-        public UInt32 PrivOffset { get; private set; }
+        public uint PrivOffset { get; private set; }
 
         /// <summary>
-        /// Length of private data block.
+        /// Gets the length of private data block.
         /// </summary>
-        public UInt32 PrivLength { get; private set; }
+        public uint PrivLength { get; private set; }
     }
 }

@@ -16,12 +16,21 @@ using WoffDotNet.Validators;
 
 namespace WoffDotNet
 {
+    /// <summary>
+    /// The WOFF reader.
+    /// </summary>
     public class WoffReader
     {
         private readonly BinaryReader _binaryReader;
 
+        /// <summary>
+        /// The byte boundary.
+        /// </summary>
         public const uint ByteBoundary = 4;
 
+        /// <summary>
+        /// The maximal padding between blocks.
+        /// </summary>
         public const uint MaxPadding = ByteBoundary - 1;
 
         private List<WoffTableDirectory> _tableDirectories;
@@ -32,6 +41,12 @@ namespace WoffDotNet
 
         private NestedBlock _protocolBlock;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WoffReader"/> class.
+        /// </summary>
+        /// <param name="binaryReader">
+        /// The binary reader.
+        /// </param>
         public WoffReader(BinaryReader binaryReader)
         {
             Contract.Requires(binaryReader != null);
@@ -42,6 +57,12 @@ namespace WoffDotNet
             _binaryReader = binaryReader;
         }
 
+        /// <summary>
+        /// Process the reading of the WOFF file
+        /// </summary>
+        /// <exception cref="AggregateException">
+        /// Thrown if there was a severe error.
+        /// </exception>
         public void Process()
         {
             Contract.Ensures(HeaderState != null);
@@ -266,6 +287,9 @@ namespace WoffDotNet
             _protocolBlock.AddChild(tableDirectoryBlock);
         }
 
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
         public WoffHeader Header
         {
             get
@@ -274,12 +298,24 @@ namespace WoffDotNet
             }
         }
 
+        /// <summary>
+        /// Gets the header state.
+        /// </summary>
         public HeaderState HeaderState { get; private set; }
 
+        /// <summary>
+        /// Gets the metadata.
+        /// </summary>
         public XmlDocument Metadata { get; private set; }
 
+        /// <summary>
+        /// Gets the exceptions associated with parsing the metadata
+        /// </summary>
         public IEnumerable<Exception> MetadataExceptions { get; private set; }
 
+        /// <summary>
+        /// Gets the private data
+        /// </summary>
         public byte[] PrivateData { get; private set; }
     }
 }

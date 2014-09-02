@@ -9,6 +9,9 @@ using WoffDotNet.Validators;
 
 namespace WoffDotNet
 {
+    /// <summary>
+    /// The WOFF helpers.
+    /// </summary>
     public static class WoffHelpers
     {
         public static bool HasMetadata(this WoffHeader header)
@@ -64,6 +67,15 @@ namespace WoffDotNet
             return false;
         }
 
+        /// <summary>
+        /// Calculates the encoding of the byte array.
+        /// </summary>
+        /// <param name="bytes">
+        /// The bytes.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Encoding"/>.
+        /// </returns>
         public static Encoding GetEncoding(this byte[] bytes)
         {
             using (var reader = new StreamReader(new MemoryStream(bytes), true))

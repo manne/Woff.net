@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{43EE12DC-6DA3-40C6-93D2-957E8392F220}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\nuget.config = .nuget\nuget.config
+		..\lib\repositories.config = ..\lib\repositories.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocker", "Blocker\Blocker.csproj", "{873743B0-3081-4C5E-8525-A8B1A76FAD0E}"

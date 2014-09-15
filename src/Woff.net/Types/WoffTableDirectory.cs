@@ -27,6 +27,8 @@ namespace WoffDotNet.Types
 
         public uint OrigCheckSum { get; set; }
 
+        internal uint Padding { get; set; }
+
         /// <summary>
         /// Returns the tag as a printable string.
         /// </summary>

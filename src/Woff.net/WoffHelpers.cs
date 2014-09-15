@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -119,6 +120,11 @@ namespace WoffDotNet
             if (c[0] == char.MinValue)
                 c[0] = ' ';
             return new string(c);
+        }
+
+        public static bool IsNullByteArray(byte[] bytes)
+        {
+            return bytes.Any(b => b == 0);
         }
     }
 }

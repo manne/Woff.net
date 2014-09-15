@@ -588,7 +588,20 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<AggregateException>().WithInnerException<BlockNotOnBoundaryException>();
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.GetType() == typeof(BlockNotOnBoundaryException));
+        }
+
+        [Fact]
+        public void Invalid_Directory_4_Byte_003()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_4_byte_003);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().ContainItemsAssignableTo<InvalidNullPaddingException>();
         }
 
         [Fact]

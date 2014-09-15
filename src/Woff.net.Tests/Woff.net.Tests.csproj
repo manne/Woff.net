@@ -84,6 +84,7 @@
     <None Include="Resources\blocks-private-absent-001.woff" />
     <None Include="Resources\blocks-private-absent-002.woff" />
     <None Include="Resources\directory-4-byte-001.woff" />
+    <None Include="Resources\directory-4-byte-003.woff" />
     <None Include="Resources\directory-origLength-001.woff" />
     <None Include="Resources\directory-origLength-002.woff" />
     <None Include="Resources\directory-overlaps-001.woff" />

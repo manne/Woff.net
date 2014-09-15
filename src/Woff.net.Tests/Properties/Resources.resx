@@ -247,4 +247,7 @@
   <data name="blocks_overlap_003" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\blocks-overlap-003.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="directory_4_byte_003" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\directory-4-byte-003.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

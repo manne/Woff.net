@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 using Blocker;
@@ -79,9 +80,18 @@ namespace WoffDotNet
                 throw new AggregateException("Following exceptions occured", _protocolBlock.Exceptions);
             }
 
-            ProcessFontTables();
+            var minorExceptions = new List<Exception>(10);
+
+            var exceptionsFromProcessingFontTables = ProcessFontTables();
+            minorExceptions.AddRange(exceptionsFromProcessingFontTables.InnerExceptions);
+
             ProcessMetadata();
             ProcessPrivateData();
+
+            if (minorExceptions.Any())
+            {
+                throw new AggregateException(minorExceptions);
+            }
         }
 
         private void ProcessPrivateData()
@@ -122,9 +132,10 @@ namespace WoffDotNet
             MetadataExceptions = reader.Exceptions;
         }
 
-        private void ProcessFontTables()
+        private AggregateException ProcessFontTables()
         {
             _fontTableDictionary = new Dictionary<WoffTableDirectory, Tuple<byte[], byte[]>>(_tableDirectories.Count);
+            var result = new List<Exception>();
 
             for (int i = 0; i < _tableDirectories.Count; i++)
             {
@@ -156,8 +167,24 @@ namespace WoffDotNet
                     throw new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The stated font table length {0} is not equal to the actual value {1}", tableDirectory.OrigLength, uncompressedFontTable.Length));
                 }
 
+                if (tableDirectory.Padding > 0)
+                {
+                    var paddingBytes = new byte[tableDirectory.Padding];
+                    if (_binaryReader.Read(paddingBytes, 0, paddingBytes.Length) != paddingBytes.Length)
+                    {
+                        throw new EndOfStreamException();
+                    }
+
+                    if (!WoffHelpers.IsNullByteArray(paddingBytes))
+                    {
+                        result.Add(new InvalidNullPaddingException("A table is not padded with null bytes"));
+                    }
+                }
+
                 _fontTableDictionary.Add(tableDirectory, new Tuple<byte[], byte[]>(bytes, uncompressedFontTable));
             }
+
+            return new AggregateException(result);
         }
 
         private void ProcessTableDirectories()
@@ -165,6 +192,7 @@ namespace WoffDotNet
             Contract.Ensures(_tableDirectories != null);
             Contract.Ensures(_tableDirectories.Count == Header.NumTables);
 
+            var result = new List<Exception>(5);
             var tableDirectoriesBlockSize = Header.NumTables * WoffTableDirectory.Size;
             var bytes = new byte[tableDirectoriesBlockSize];
             if (_binaryReader.Read(bytes, 0, (int)tableDirectoriesBlockSize) != tableDirectoriesBlockSize)
@@ -192,7 +220,9 @@ namespace WoffDotNet
 
                 if (i < Header.NumTables - 1)
                 {
-                    maxTableDirectoriesSizeWithoutLastPadding += BlockExtensions.CalculateNextBytePadding(maxTableDirectoriesSizeWithoutLastPadding, ByteBoundary);
+                    var nextPadding = BlockExtensions.CalculateNextBytePadding(maxTableDirectoriesSizeWithoutLastPadding, ByteBoundary);
+                    maxTableDirectoriesSizeWithoutLastPadding += nextPadding;
+                    woffTableDirectory.Padding = nextPadding;
                 }
             }
 

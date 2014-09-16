@@ -283,4 +283,7 @@
   <data name="blocks_extraneous_data_006" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\blocks-extraneous-data-006.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="blocks_extraneous_data_007" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blocks-extraneous-data-007.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

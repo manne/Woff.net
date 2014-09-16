@@ -108,13 +108,13 @@ namespace Blocker
                         long diff = (long)End - current.End;
                         if (diff > 0)
                         {
-                            _exceptions.Add(new BlockMaxPaddingExceededException(string.Format(CultureInfo.InvariantCulture, "There is additional space between the last child {0} and the end {1}", current, End)));
+                            _exceptions.Add(new BlockMaxPaddingExceededException(string.Format(CultureInfo.InvariantCulture, "There is additional space between the last child ({0}) and the end ({1})", current, End)));
                             result = false;
                         }
 
                         if (diff < 0)
                         {
-                            _exceptions.Add(new BlockOverlappingException(string.Format(CultureInfo.InvariantCulture, "There is additional space between the last child {0} and the end {1}", current, End)));
+                            _exceptions.Add(new BlockOverlappingException(string.Format(CultureInfo.InvariantCulture, "There is additional space between the last child ({0}) and the end ({1})", current, End)));
                             result = false;
                         }
                     }

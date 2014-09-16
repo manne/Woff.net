@@ -209,7 +209,6 @@ namespace WoffDotNet
             var tableDirectoriesBlocks = new List<Block>(Header.NumTables);
 
             int offset = 0;
-            uint maxTableDirectoriesSizeWithoutLastPadding = 0;
             for (var i = 0; i < Header.NumTables; i++)
             {
                 var directoryBytes = new byte[WoffTableDirectory.Size];
@@ -218,25 +217,28 @@ namespace WoffDotNet
                 var woffTableDirectory = directoryReader.Process();
                 _tableDirectories.Add(woffTableDirectory);
 
-                maxTableDirectoriesSizeWithoutLastPadding += woffTableDirectory.CompLength;
-
                 tableDirectoriesBlocks.Add(Block.CreateFromStartAndDistance(woffTableDirectory.Offset, woffTableDirectory.CompLength));
                 offset += (int)WoffTableDirectory.Size;
-
-                if (i < Header.NumTables - 1)
-                {
-                    var nextPadding = BlockExtensions.CalculateNextBytePadding(maxTableDirectoriesSizeWithoutLastPadding, ByteBoundary);
-                    maxTableDirectoriesSizeWithoutLastPadding += nextPadding;
-                    woffTableDirectory.Padding = nextPadding;
-                }
             }
 
             CheckCorrectOrderOfTableDirectories();
 
             _tableDirectories.Sort((directory, tableDirectory) => directory.Offset.CompareTo(tableDirectory.Offset));
             tableDirectoriesBlocks.Sort((block, block1) => block.Start.CompareTo(block1.Start));
+
+            WoffTableDirectory lastBlock = _tableDirectories[0];
+            for (var i = 0; i < _tableDirectories.Count; i++)
+            {
+                lastBlock = _tableDirectories[i];
+
+                if (i < _tableDirectories.Count - 1)
+                {
+                    lastBlock.Padding = BlockExtensions.CalculateNextBytePadding(lastBlock.Offset + lastBlock.CompLength, ByteBoundary);
+                }
+            }
+
             var start = WoffHeader.Size + tableDirectoriesBlockSize;
-            var end = start + maxTableDirectoriesSizeWithoutLastPadding + 1;
+            var end = lastBlock.Offset + lastBlock.CompLength;
             if (start != tableDirectoriesBlocks[0].Start)
             {
                 throw new InvalidDataException(string.Format("The table data does not start ({0}) at the required position ({1})", tableDirectoriesBlocks[0].Start, start));

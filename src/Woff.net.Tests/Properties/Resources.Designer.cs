@@ -463,6 +463,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] tabledata_compression_001 {
+            get {
+                object obj = ResourceManager.GetObject("tabledata_compression_001", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] tabledata_zlib_001 {
             get {
                 object obj = ResourceManager.GetObject("tabledata_zlib_001", resourceCulture);

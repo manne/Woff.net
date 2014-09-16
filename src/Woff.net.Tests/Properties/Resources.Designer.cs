@@ -103,6 +103,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] blocks_extraneous_data_005 {
+            get {
+                object obj = ResourceManager.GetObject("blocks_extraneous_data_005", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] blocks_metadata_absent_001 {
             get {
                 object obj = ResourceManager.GetObject("blocks_metadata_absent_001", resourceCulture);

@@ -231,6 +231,8 @@ namespace WoffDotNet
                 }
             }
 
+            CheckCorrectOrderOfTableDirectories();
+
             _tableDirectories.Sort((directory, tableDirectory) => directory.Offset.CompareTo(tableDirectory.Offset));
             tableDirectoriesBlocks.Sort((block, block1) => block.Start.CompareTo(block1.Start));
             var start = WoffHeader.Size + tableDirectoriesBlockSize;
@@ -248,6 +250,21 @@ namespace WoffDotNet
             var nestedBlock = new NestedBlock(start, end, new NestedBlockOptions(MaxPadding, ByteBoundary));
             nestedBlock.AddRange(tableDirectoriesBlocks.ToArray());
             _protocolBlock.AddChild(nestedBlock);
+        }
+
+        private void CheckCorrectOrderOfTableDirectories()
+        {
+            for (int i = 0; i < _tableDirectories.Count; i++)
+            {
+                if (i > 0 && i < _tableDirectories.Count)
+                {
+                    var diff = _tableDirectories[i - 1].Tag.CompareTo(_tableDirectories[i].Tag);
+                    if (diff > 0)
+                    {
+                        throw new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The table directory entries are not stored in alphabetical order. {0} {1}", _tableDirectories[i - 1].TagAsString(), _tableDirectories[i].TagAsString()));
+                    }
+                }
+            }
         }
 
         private void ProcessHeader()

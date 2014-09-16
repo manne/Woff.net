@@ -436,6 +436,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Directory_Ascending_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_ascending_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidRangeException>();
+        }
+
+        [Fact]
         public void Invalid_TableData_Zlib_001()
         {
             // arrange

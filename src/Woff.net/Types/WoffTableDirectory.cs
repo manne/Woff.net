@@ -16,7 +16,7 @@ namespace WoffDotNet.Types
             OrigCheckSum = origCheckSum;
         }
 
-        [DebuggerDisplay("{TagAsString()}")]
+        [DebuggerDisplay("{TagAsString()}, {Tag}")]
         public uint Tag { get; set; }
 
         public uint Offset { get; set; }

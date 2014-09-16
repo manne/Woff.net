@@ -670,6 +670,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Blocks_Ordering_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_ordering_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidDataException>();
+        }
+
+        [Fact]
         public void Invalid_Blocks_Metadata_Absent_001()
         {
             // arrange

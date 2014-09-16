@@ -672,5 +672,19 @@ namespace WoffDotNet.Tests
             // assert
             action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
         }
+
+        /*
+        [Fact]
+        public void Invalid_Directory_CompLength_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_compLength_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.Message == "The \"hmtx\" table directory entry has a compressed length (22) larger than the original length (16).");
+        }*/
     }
 }

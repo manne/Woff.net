@@ -183,6 +183,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] directory_compLength_001 {
+            get {
+                object obj = ResourceManager.GetObject("directory_compLength_001", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] directory_origLength_001 {
             get {
                 object obj = ResourceManager.GetObject("directory_origLength_001", resourceCulture);

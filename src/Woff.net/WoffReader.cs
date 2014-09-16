@@ -167,6 +167,11 @@ namespace WoffDotNet
                     throw new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The stated font table length {0} is not equal to the actual value {1}", tableDirectory.OrigLength, uncompressedFontTable.Length));
                 }
 
+                if (tableDirectory.CompLength > tableDirectory.OrigLength)
+                {
+                    result.Add(new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The \"{0}\" table directory entry has a compressed length ({1}) larger than the original length ({2}).", tableDirectory.TagAsString(), tableDirectory.CompLength, tableDirectory.OrigLength)));
+                }
+
                 if (tableDirectory.Padding > 0)
                 {
                     var paddingBytes = new byte[tableDirectory.Padding];

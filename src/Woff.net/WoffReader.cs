@@ -86,11 +86,34 @@ namespace WoffDotNet
             minorExceptions.AddRange(exceptionsFromProcessingFontTables.InnerExceptions);
 
             ProcessMetadata();
+
+            CheckPossiblePaddingBetweenMetadataAndPrivateData();
+
             ProcessPrivateData();
 
             if (minorExceptions.Any())
             {
                 throw new AggregateException(minorExceptions);
+            }
+        }
+
+        private void CheckPossiblePaddingBetweenMetadataAndPrivateData()
+        {
+            if (_header.MetaOffset > 0 && _header.PrivOffset > 0)
+            {
+                var startOfPadding = _header.MetaOffset + _header.MetaLength;
+                _binaryReader.BaseStream.Position = startOfPadding;
+                var paddingLength = _header.PrivOffset - startOfPadding;
+                var bytes = new byte[paddingLength];
+                if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
+                {
+                    throw new EndOfStreamException("Could not padding between metadata and private data");
+                }
+
+                if (!WoffHelpers.IsNullByteArray(bytes))
+                {
+                    throw new InvalidNullPaddingException("The bytes between metadata and private data are not padded with zero bytes");
+                }
             }
         }
 
@@ -120,7 +143,6 @@ namespace WoffDotNet
 
             _binaryReader.BaseStream.Position = Header.MetaOffset;
             var bytes = new byte[Header.MetaLength];
-            
             if (_binaryReader.Read(bytes, 0, bytes.Length) != bytes.Length)
             {
                 throw new EndOfStreamException("Could not read metadata");

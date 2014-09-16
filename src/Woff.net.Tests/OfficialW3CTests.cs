@@ -202,6 +202,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Metadata_Padding_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_padding_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidNullPaddingException>();
+        }
+
+        [Fact]
         public void Valid_Metadata_Encoding_001()
         {
             // arrange

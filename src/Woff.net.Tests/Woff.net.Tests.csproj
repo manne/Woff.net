@@ -109,6 +109,7 @@
     <None Include="Resources\metadata-encoding-006.woff" />
     <None Include="Resources\metadata-metaOrigLength-001.woff" />
     <None Include="Resources\metadata-metaOrigLength-002.woff" />
+    <None Include="Resources\metadata-padding-001.woff" />
     <None Include="Resources\metadata-schema-metadata-001.woff" />
     <None Include="Resources\metadata-schema-metadata-002.woff" />
     <None Include="Resources\metadata-schema-metadata-003.woff" />

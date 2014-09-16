@@ -475,6 +475,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Valid_TableData_Compression_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.tabledata_compression_002);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldNotThrow(because: "the woff is valid");
+        }
+
+        [Fact]
         public void Invalid_Blocks_Extraneous_Data_001()
         {
             // arrange

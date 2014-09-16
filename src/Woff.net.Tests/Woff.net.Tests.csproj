@@ -114,6 +114,7 @@
     <None Include="Resources\metadata-schema-metadata-003.woff" />
     <None Include="Resources\metadata-schema-metadata-004.woff" />
     <None Include="Resources\tabledata-compression-001.woff" />
+    <None Include="Resources\tabledata-compression-002.woff" />
     <None Include="Resources\tabledata-zlib-001.woff" />
     <None Include="Resources\valid-001.woff" />
   </ItemGroup>

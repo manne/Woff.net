@@ -259,4 +259,7 @@
   <data name="tabledata_compression_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tabledata-compression-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="tabledata_compression_002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tabledata-compression-002.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

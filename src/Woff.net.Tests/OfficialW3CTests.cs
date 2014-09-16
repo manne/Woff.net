@@ -553,6 +553,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Blocks_Extraneous_Data_003()
+        {
+            // arrange
+            var cut = GetReader(Resources.blocks_extraneous_data_003);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.GetType() == typeof(BlockMaxPaddingExceededException));
+        }
+
+        [Fact]
         public void Invalid_Blocks_Overlap_001()
         {
             // arrange

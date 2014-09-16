@@ -75,6 +75,7 @@
     <None Include="packages.config" />
     <None Include="Resources\blocks-extraneous-data-001.woff" />
     <None Include="Resources\blocks-extraneous-data-002.woff" />
+    <None Include="Resources\blocks-extraneous-data-003.woff" />
     <None Include="Resources\blocks-metadata-absent-001.woff" />
     <None Include="Resources\blocks-metadata-absent-002.woff" />
     <None Include="Resources\blocks-overlap-001.woff" />

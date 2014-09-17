@@ -50,7 +50,6 @@ namespace WoffDotNet
 
         public static bool HasEncoding(this XmlDocument document, string encoding)
         {
-
             if (document.FirstChild.NodeType == XmlNodeType.XmlDeclaration)
             {
                 var xmlDeclaration = (XmlDeclaration)document.FirstChild;

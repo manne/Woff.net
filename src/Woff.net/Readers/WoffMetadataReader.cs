@@ -77,15 +77,14 @@ namespace WoffDotNet.Readers
                         try
                         {
                             xmlDocument.Load(validatingReader);
+                            if (!xmlDocument.HasEncoding("UTF-8"))
+                            {
+                                exceptions.Add(new EncodingNotSupportedException("metadata must be encoded with UTF-8"));
+                            }
                         }
                         catch (Exception e)
                         {
                             exceptions.Add(e);
-                        }
-
-                        if (!xmlDocument.HasEncoding("UTF-8"))
-                        {
-                            exceptions.Add(new EncodingNotSupportedException("metadata must be encoded with UTF-8"));
                         }
                     }
 

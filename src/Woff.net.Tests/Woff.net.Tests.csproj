@@ -85,6 +85,7 @@
     <None Include="Resources\blocks-ordering-001.woff" />
     <None Include="Resources\blocks-ordering-002.woff" />
     <None Include="Resources\blocks-ordering-003.woff" />
+    <None Include="Resources\blocks-ordering-004.woff" />
     <None Include="Resources\blocks-overlap-001.woff" />
     <None Include="Resources\blocks-overlap-002.woff" />
     <None Include="Resources\blocks-overlap-003.woff" />

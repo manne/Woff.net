@@ -295,4 +295,7 @@
   <data name="blocks_ordering_003" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\blocks-ordering-003.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="blocks_ordering_004" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blocks-ordering-004.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

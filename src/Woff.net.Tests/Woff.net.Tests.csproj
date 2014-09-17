@@ -129,6 +129,7 @@
     <None Include="Resources\metadata-well-formed-003.woff" />
     <None Include="Resources\metadata-well-formed-004.woff" />
     <None Include="Resources\metadata-well-formed-005.woff" />
+    <None Include="Resources\metadata-well-formed-006.woff" />
     <None Include="Resources\tabledata-compression-001.woff" />
     <None Include="Resources\tabledata-compression-002.woff" />
     <None Include="Resources\tabledata-compression-003.woff" />

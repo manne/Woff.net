@@ -173,6 +173,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] blocks_ordering_003 {
+            get {
+                object obj = ResourceManager.GetObject("blocks_ordering_003", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] blocks_overlap_001 {
             get {
                 object obj = ResourceManager.GetObject("blocks_overlap_001", resourceCulture);

@@ -85,6 +85,15 @@ namespace WoffDotNet
             var exceptionsFromProcessingFontTables = ProcessFontTables();
             minorExceptions.AddRange(exceptionsFromProcessingFontTables.InnerExceptions);
 
+            if (_header.MetaOffset > 0 && _header.PrivOffset > 0)
+            {
+                if (_header.MetaOffset.CompareTo(_header.PrivOffset) > 0)
+                {
+                    minorExceptions.Add(new InvalidDataException("The metadata block must be before the privatedata block."));
+                    throw new AggregateException(minorExceptions);
+                }
+            }
+
             ProcessMetadata();
 
             CheckPossiblePaddingBetweenMetadataAndPrivateData();

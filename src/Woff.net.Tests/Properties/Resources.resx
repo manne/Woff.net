@@ -301,4 +301,7 @@
   <data name="directory_extraneous_data_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\directory-extraneous-data-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="metadata_well_formed_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\metadata-well-formed-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

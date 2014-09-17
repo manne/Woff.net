@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml;
 
 using Blocker.Exceptions;
 
@@ -167,6 +168,32 @@ namespace WoffDotNet.Tests
         {
             // arrange
             var cut = GetReader(Resources.metadata_metaOrigLength_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Well_Formed_001_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_well_formed_001);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().ContainItemsAssignableTo<XmlException>();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Well_Formed_001_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_well_formed_001);
 
             // act
             cut.Process();

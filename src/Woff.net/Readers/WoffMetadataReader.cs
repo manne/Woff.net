@@ -74,7 +74,14 @@ namespace WoffDotNet.Readers
                             return true;
                         };
 
-                        xmlDocument.Load(validatingReader);
+                        try
+                        {
+                            xmlDocument.Load(validatingReader);
+                        }
+                        catch (Exception e)
+                        {
+                            exceptions.Add(e);
+                        }
 
                         if (!xmlDocument.HasEncoding("UTF-8"))
                         {

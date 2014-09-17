@@ -868,6 +868,19 @@ namespace WoffDotNet.Tests
             action.ShouldThrow<AggregateException>().WithInnerException<BlockOverlappingException>();
         }
 
+        [Fact]
+        public void Invalid_Directory_Extraneous_Data_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_extraneous_data_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<AggregateException>().WithInnerException<BlockMaxPaddingExceededException>();
+        }
+
         /*
         [Fact]
         public void Invalid_Directory_CompLength_001()

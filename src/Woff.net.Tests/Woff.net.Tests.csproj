@@ -96,6 +96,7 @@
     <None Include="Resources\directory-4-byte-003.woff" />
     <None Include="Resources\directory-ascending-001.woff" />
     <None Include="Resources\directory-compLength-001.woff" />
+    <None Include="Resources\directory-extraneous-data-001.woff" />
     <None Include="Resources\directory-origLength-001.woff" />
     <None Include="Resources\directory-origLength-002.woff" />
     <None Include="Resources\directory-overlaps-001.woff" />

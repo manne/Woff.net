@@ -255,6 +255,32 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Metadata_Well_Formed_004_CorrectException()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_well_formed_004);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.MetadataExceptions.Should().ContainItemsAssignableTo<XmlException>();
+        }
+
+        [Fact]
+        public void Invalid_Metadata_Well_Formed_004_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_well_formed_004);
+
+            // act
+            cut.Process();
+
+            // assert
+            cut.Metadata.Should().BeNull();
+        }
+
+        [Fact]
         public void Invalid_Metadata_MetaOrigLength_002_CorrectException()
         {
             // arrange

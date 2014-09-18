@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
+using Mono;
+
 using WoffDotNet.Types;
 using WoffDotNet.Validators;
 
@@ -124,6 +126,21 @@ namespace WoffDotNet
         public static bool IsNullByteArray(byte[] bytes)
         {
             return bytes.Any(b => b == 0);
+        }
+
+        public static uint CalculateChecksum(byte[] bytes)
+        {
+            var converter = DataConverter.BigEndian;
+            var padding = (int)Calculate4BytePadding((uint)bytes.Length);
+            bytes = bytes.Concat(new byte[padding]).ToArray();
+            uint result = 0;
+            for (var i = 0; i <= bytes.Length - 4; i += 4)
+            {
+                result += converter.GetUInt32(bytes, i);
+            }
+
+            result = (uint)(result % 4294967296);
+            return result;
         }
     }
 }

@@ -36,6 +36,10 @@ namespace WoffDotNet
 
         private List<WoffTableDirectory> _tableDirectories;
 
+        /// <summary>
+        /// the first value in the tuple is the raw font table data.
+        /// the second value in the tuple is the uncompressed font table data.
+        /// </summary>
         private Dictionary<WoffTableDirectory, Tuple<byte[], byte[]>> _fontTableDictionary;
 
         private WoffHeader _header;
@@ -74,16 +78,29 @@ namespace WoffDotNet
                 throw new AggregateException("Following exceptions occured", _protocolBlock.Exceptions);
             }
 
+            var minorExceptions = new List<Exception>(10);
             ProcessTableDirectories();
             if (!_protocolBlock.Validate(true))
             {
-                throw new AggregateException("Following exceptions occured", _protocolBlock.Exceptions);
+                minorExceptions.AddRange(_protocolBlock.Exceptions);
             }
-
-            var minorExceptions = new List<Exception>(10);
 
             var exceptionsFromProcessingFontTables = ProcessFontTables();
             minorExceptions.AddRange(exceptionsFromProcessingFontTables.InnerExceptions);
+
+            foreach (var tuple in _fontTableDictionary)
+            {
+                if ("head".Equals(tuple.Key.TagAsString(), StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var calculatedChecksum = WoffHelpers.CalculateChecksum(tuple.Value.Item2);
+                if (calculatedChecksum != tuple.Key.OrigCheckSum)
+                {
+                    minorExceptions.Add(new InvalidWoffFontTableChecksumException(string.Format(CultureInfo.InvariantCulture, "The \"{0}\" table directory entry original checksum (0x{1:X}) does not match the checksum (0x{2:X}) calculated from the data.", tuple.Key.TagAsString(), tuple.Key.OrigCheckSum, calculatedChecksum)));
+                }
+            }
 
             if (_header.MetaOffset > 0 && _header.PrivOffset > 0)
             {
@@ -92,6 +109,11 @@ namespace WoffDotNet
                     minorExceptions.Add(new InvalidDataException("The metadata block must be before the privatedata block."));
                     throw new AggregateException(minorExceptions);
                 }
+            }
+
+            if (minorExceptions.Count > 0)
+            {
+                throw new AggregateException(minorExceptions);
             }
 
             ProcessMetadata();
@@ -172,6 +194,18 @@ namespace WoffDotNet
             {
                 var tableDirectory = _tableDirectories[i];
 
+                if (tableDirectory.Offset > _header.Length)
+                {
+                    result.Add(new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The \"{0}\" table directory entry offset ({1}) is past the end of the table data block ({2}).", tableDirectory.TagAsString(), tableDirectory.Offset, _header.Length)));
+                    continue;
+                }
+
+                if (tableDirectory.Offset + tableDirectory.CompLength > _header.Length)
+                {
+                    result.Add(new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The \"{0}\" table directory entry offset ({1}) + length ({2}) is past the end of the table data block ({3}).", tableDirectory.TagAsString(), tableDirectory.Offset, tableDirectory.CompLength, _header.Length)));
+                    continue;
+                }
+
                 _binaryReader.BaseStream.Position = tableDirectory.Offset;
 
                 var bytes = new byte[tableDirectory.CompLength];
@@ -181,7 +215,7 @@ namespace WoffDotNet
                 }
 
                 var uncompressedFontTable = bytes;
-                if (tableDirectory.CompLength != tableDirectory.OrigLength)
+                if (tableDirectory.CompLength < tableDirectory.OrigLength)
                 {
                     try
                     {
@@ -189,13 +223,13 @@ namespace WoffDotNet
                     }
                     catch (ZlibException e)
                     {
-                        throw new WoffUncompressException("Could not decompress font table", e);
+                        result.Add(new WoffUncompressException("Could not decompress font table", e));
                     }
                 }
 
                 if (uncompressedFontTable.Length != tableDirectory.OrigLength)
                 {
-                    throw new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The stated font table length {0} is not equal to the actual value {1}", tableDirectory.OrigLength, uncompressedFontTable.Length));
+                    result.Add(new InvalidRangeException(string.Format(CultureInfo.InvariantCulture, "The \"{0}\" table directory entry has an original length ({1}) that does not match the actual length of the decompressed data ({2}).", tableDirectory.TagAsString(), tableDirectory.OrigLength, uncompressedFontTable.Length)));
                 }
 
                 if (tableDirectory.CompLength > tableDirectory.OrigLength)

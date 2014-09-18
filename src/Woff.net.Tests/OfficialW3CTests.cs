@@ -138,6 +138,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Header_TotalSfntSize_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.header_totalSfntSize_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidWoffTotalSfntSizeException>();
+        }
+
+        [Fact]
         public void Invalid_Metadata_MetaOrigLength_001_NoMetadata()
         {
             // arrange
@@ -628,7 +641,7 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<InvalidRangeException>();
+            action.ShouldThrow<InvalidRangeException>().WithMessage("The \"CFF \" table directory entry has an original length (562) that does not match the actual length of the decompressed data (558).");
         }
 
         [Fact]
@@ -1064,7 +1077,6 @@ namespace WoffDotNet.Tests
             action.ShouldThrow<AggregateException>().WithInnerException<BlockMaxPaddingExceededException>();
         }
 
-        /*
         [Fact]
         public void Invalid_Directory_CompLength_001()
         {
@@ -1075,7 +1087,7 @@ namespace WoffDotNet.Tests
             Action action = cut.Process;
 
             // assert
-            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.Message == "The \"hmtx\" table directory entry has a compressed length (22) larger than the original length (16).");
-        }*/
+            action.ShouldThrow<AggregateException>().And.InnerExceptions.Should().Contain(e => e.GetType() == typeof(BlockMaxPaddingExceededException)).And.Contain(e => e.GetType() == typeof(BlockMaxPaddingExceededException));
+        }
     }
 }

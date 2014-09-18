@@ -42,11 +42,7 @@ namespace WoffDotNet.Readers
             var totalSfntSize = enc.GetUInt32(_bytes, 16);
             if (totalSfntSize % 4 != 0)
             {
-                throw new InvalidWoffTotalSfntSizeException(
-                    string.Format(
-                        CultureInfo.InvariantCulture,
-                        "The total sfnt size ({0}) is not a multiple of four.",
-                        totalSfntSize));
+                throw new InvalidWoffTotalSfntSizeException(string.Format(CultureInfo.InvariantCulture, "The total sfnt size ({0}) is not a multiple of four.", totalSfntSize));
             }
 
             var majorVersion = enc.GetUInt16(_bytes, 20);

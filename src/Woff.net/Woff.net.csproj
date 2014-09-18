@@ -88,6 +88,7 @@
     <Compile Include="Exceptions\GeneralWoffException.cs" />
     <Compile Include="Exceptions\InvalidNullPaddingException.cs" />
     <Compile Include="Exceptions\InvalidRangeException.cs" />
+    <Compile Include="Exceptions\InvalidWoffFontTableChecksumException.cs" />
     <Compile Include="Exceptions\InvalidWoffMagicNumberException.cs" />
     <Compile Include="Exceptions\InvalidWoffMetadaElementException.cs" />
     <Compile Include="Exceptions\InvalidWoffReservedValueException.cs" />

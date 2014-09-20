@@ -645,6 +645,19 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Invalid_Directory_OrigChecksum_001()
+        {
+            // arrange
+            var cut = GetReader(Resources.directory_origCheckSum_001);
+
+            // act
+            Action action = cut.Process;
+
+            // assert
+            action.ShouldThrow<InvalidWoffFontTableChecksumException>().WithMessage("The \"CFF \" table directory entry original checksum (0x0) does not match the checksum (0x89dc3aff) calculated from the data.");
+        }
+
+        [Fact]
         public void Invalid_Directory_Ascending_001()
         {
             // arrange

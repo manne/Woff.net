@@ -127,6 +127,7 @@
     <None Include="Resources\metadata-schema-metadata-003.woff" />
     <None Include="Resources\metadata-schema-metadata-004.woff" />
     <None Include="Resources\metadata-schema-metadata-005.woff" />
+    <None Include="Resources\metadata-schema-metadata-006.woff" />
     <None Include="Resources\metadata-well-formed-001.woff" />
     <None Include="Resources\metadata-well-formed-002.woff" />
     <None Include="Resources\metadata-well-formed-003.woff" />

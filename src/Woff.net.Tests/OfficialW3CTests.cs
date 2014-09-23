@@ -636,6 +636,23 @@ namespace WoffDotNet.Tests
             }
         }
 
+        [Fact]
+        public void Invalid_Metadata_Schema_Metadata_006_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_metadata_006);
+
+            // act
+            cut.Process();
+
+            // assert
+            using (new AssertionScope())
+            {
+                cut.Metadata.Should().BeNull();
+                cut.MetadataExceptions.Should().NotBeEmpty();
+            }
+        }
+
 
         [Fact]
         public void Invalid_Directory_OrigLength_001()

@@ -620,7 +620,7 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
-        public void Invalid_Metadata_Schema_Metadata_005_NoMetadata()
+        public void Invalid_Metadata_Schema_Metadata_005()
         {
             // arrange
             var cut = GetReader(Resources.metadata_schema_metadata_005);
@@ -637,7 +637,7 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
-        public void Invalid_Metadata_Schema_Metadata_006_NoMetadata()
+        public void Invalid_Metadata_Schema_Metadata_006()
         {
             // arrange
             var cut = GetReader(Resources.metadata_schema_metadata_006);

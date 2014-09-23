@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -11,6 +12,7 @@ using WoffDotNet.Exceptions;
 using WoffDotNet.Tests.Properties;
 
 using Xunit;
+using Xunit.Extensions;
 
 namespace WoffDotNet.Tests
 {
@@ -684,6 +686,39 @@ namespace WoffDotNet.Tests
             {
                 cut.Metadata.Should().NotBeNull();
                 cut.MetadataExceptions.Should().BeNull();
+            }
+        }
+
+        public static IEnumerable<object[]> Invalid_Metadata_Schema_UniqueId_Data
+        {
+            get
+            {
+                return new[]
+                           {
+                              new object[] { Resources.metadata_schema_uniqueid_003 },
+                              new object[] { Resources.metadata_schema_uniqueid_004 },
+                              new object[] { Resources.metadata_schema_uniqueid_005 },
+                              new object[] { Resources.metadata_schema_uniqueid_006 },
+                              new object[] { Resources.metadata_schema_uniqueid_007 },
+                           };
+            }
+        }
+
+        [Theory]
+        [PropertyData("Invalid_Metadata_Schema_UniqueId_Data")]
+        public void Invalid_Metadata_Schema_UniqueId_Tests(byte[] woffBytes)
+        {
+            // arrange
+            var cut = GetReader(woffBytes);
+
+            // act
+            cut.Process();
+
+            // assert
+            using (new AssertionScope())
+            {
+                cut.Metadata.Should().BeNull();
+                cut.MetadataExceptions.Should().NotBeEmpty();
             }
         }
 

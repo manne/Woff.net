@@ -130,6 +130,11 @@
     <None Include="Resources\metadata-schema-metadata-006.woff" />
     <None Include="Resources\metadata-schema-uniqueid-001.woff" />
     <None Include="Resources\metadata-schema-uniqueid-002.woff" />
+    <None Include="Resources\metadata-schema-uniqueid-003.woff" />
+    <None Include="Resources\metadata-schema-uniqueid-004.woff" />
+    <None Include="Resources\metadata-schema-uniqueid-005.woff" />
+    <None Include="Resources\metadata-schema-uniqueid-006.woff" />
+    <None Include="Resources\metadata-schema-uniqueid-007.woff" />
     <None Include="Resources\metadata-well-formed-001.woff" />
     <None Include="Resources\metadata-well-formed-002.woff" />
     <None Include="Resources\metadata-well-formed-003.woff" />

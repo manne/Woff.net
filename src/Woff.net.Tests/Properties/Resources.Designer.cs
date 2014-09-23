@@ -633,6 +633,56 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] metadata_schema_uniqueid_003 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_schema_uniqueid_003", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] metadata_schema_uniqueid_004 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_schema_uniqueid_004", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] metadata_schema_uniqueid_005 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_schema_uniqueid_005", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] metadata_schema_uniqueid_006 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_schema_uniqueid_006", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] metadata_schema_uniqueid_007 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_schema_uniqueid_007", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] metadata_well_formed_001 {
             get {
                 object obj = ResourceManager.GetObject("metadata_well_formed_001", resourceCulture);

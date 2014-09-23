@@ -328,4 +328,7 @@
   <data name="directory_origCheckSum_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\directory-origCheckSum-001.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="metadata_schema_metadata_005" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\metadata-schema-metadata-005.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

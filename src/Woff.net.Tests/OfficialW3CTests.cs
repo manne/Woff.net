@@ -5,6 +5,7 @@ using System.Xml;
 using Blocker.Exceptions;
 
 using FluentAssertions;
+using FluentAssertions.Execution;
 
 using WoffDotNet.Exceptions;
 using WoffDotNet.Tests.Properties;
@@ -617,6 +618,24 @@ namespace WoffDotNet.Tests
             // assert
             cut.MetadataExceptions.Should().NotBeNullOrEmpty();
         }
+
+        [Fact]
+        public void Invalid_Metadata_Schema_Metadata_005_NoMetadata()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_metadata_005);
+
+            // act
+            cut.Process();
+
+            // assert
+            using (new AssertionScope())
+            {
+                cut.Metadata.Should().BeNull();
+                cut.MetadataExceptions.Should().NotBeEmpty();
+            }
+        }
+
 
         [Fact]
         public void Invalid_Directory_OrigLength_001()

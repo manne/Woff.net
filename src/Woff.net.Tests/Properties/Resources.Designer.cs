@@ -623,6 +623,16 @@ namespace WoffDotNet.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] metadata_schema_uniqueid_002 {
+            get {
+                object obj = ResourceManager.GetObject("metadata_schema_uniqueid_002", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] metadata_well_formed_001 {
             get {
                 object obj = ResourceManager.GetObject("metadata_well_formed_001", resourceCulture);

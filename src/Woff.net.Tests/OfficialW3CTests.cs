@@ -671,6 +671,23 @@ namespace WoffDotNet.Tests
         }
 
         [Fact]
+        public void Valid_Metadata_Schema_UniqueId_002()
+        {
+            // arrange
+            var cut = GetReader(Resources.metadata_schema_uniqueid_002);
+
+            // act
+            cut.Process();
+
+            // assert
+            using (new AssertionScope())
+            {
+                cut.Metadata.Should().NotBeNull();
+                cut.MetadataExceptions.Should().BeNull();
+            }
+        }
+
+        [Fact]
         public void Invalid_Directory_OrigLength_001()
         {
             // arrange
